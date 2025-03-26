@@ -1,0 +1,12 @@
+
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
+
+wwwroot/assets/css/*.css.map
+wwwroot/assets/js/*.js.map
+
+wwwroot/assets/js/core/*
+wwwroot/assets/js/plugins/*
+
+
+wwwroot/lib/*
