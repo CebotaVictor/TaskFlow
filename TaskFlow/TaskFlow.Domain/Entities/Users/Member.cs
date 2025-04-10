@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Domain.Enums;
 using TaskFlow.Domain.Entities.Users;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskFlow.Domain.Entities.Users
 {
-    internal sealed class Member : User
+
+    public sealed class Member : User
     {
+        [Column("MembersRole", Order = 5, TypeName = "ushort")]
         public Roles Role { get; set; } = Roles.employee;
     }
 }
+    

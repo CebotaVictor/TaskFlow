@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.WebApi", "TaskFlow.WebApi.csproj", "{626E418F-BB43-4343-8EB7-9B4738355C03}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EC60E31-3945-46C2-8F2B-12DB01EC1C88} = {1EC60E31-3945-46C2-8F2B-12DB01EC1C88}
+		{F86712AD-2C3D-432E-8553-6C4D7C229A4E} = {F86712AD-2C3D-432E-8553-6C4D7C229A4E}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36CEEAF8-2E73-49ED-A622-35740567021F}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,10 +16,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Application", "..\TaskFlow.Application\TaskFlow.Application.csproj", "{1EC60E31-3945-46C2-8F2B-12DB01EC1C88}"
+	ProjectSection(ProjectDependencies) = postProject
+		{71651E80-BBA1-4B36-841A-9E072A0C8E1E} = {71651E80-BBA1-4B36-841A-9E072A0C8E1E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain", "..\TaskFlow.Domain\TaskFlow.Domain.csproj", "{71651E80-BBA1-4B36-841A-9E072A0C8E1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Infrastructure", "..\TaskFlow.Infrastructure\TaskFlow.Infrastructure.csproj", "{F86712AD-2C3D-432E-8553-6C4D7C229A4E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EC60E31-3945-46C2-8F2B-12DB01EC1C88} = {1EC60E31-3945-46C2-8F2B-12DB01EC1C88}
+		{71651E80-BBA1-4B36-841A-9E072A0C8E1E} = {71651E80-BBA1-4B36-841A-9E072A0C8E1E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +53,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE8BF3F8-9E6D-4738-8589-AD51777474CB}
 	EndGlobalSection
 EndGlobal

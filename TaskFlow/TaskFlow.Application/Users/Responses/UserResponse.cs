@@ -4,11 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskFlow.Domain.Enums
+namespace TaskFlow.Application.Users.Responses
 {
-    public enum Roles:ushort
-    {
-        Admin = 0,
-        employee = 1
-    }
+    public record class UserResponse(int UserId, string UserEmail);
 }

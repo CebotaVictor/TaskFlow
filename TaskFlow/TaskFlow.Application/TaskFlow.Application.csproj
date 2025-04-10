@@ -8,8 +8,18 @@
 
   <ItemGroup>
     <Folder Include="Contracts\" />
-    <Folder Include="Interfaces\UnitOfWork\" />
     <Folder Include="Interfaces\Services\" />
+    <Folder Include="Users\Admin\" />
+    <Folder Include="Users\Members\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskFlow.Domain\TaskFlow.Domain.csproj" />
   </ItemGroup>
 
 </Project>

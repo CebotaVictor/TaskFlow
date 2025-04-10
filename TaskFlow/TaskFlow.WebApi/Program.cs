@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using TaskFlow.Infrastructure.BL;
 using TaskFlow.WebApi.Extensions;   
 
 namespace TaskFlow1
@@ -24,6 +27,17 @@ namespace TaskFlow1
 
             builder.Services.AddWebOptimizerConfig();
 
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.Secure = CookieSecurePolicy.Always; // use CookieSecurePolicy for better security over https 
+            });
+
+            builder.Services.AddResponseCompression();
+
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            builder.Services.AddDbContext<UsersDBContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -44,10 +58,12 @@ namespace TaskFlow1
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles();
+            app.UseResponseCompression(); // for better performance optimisation 
+
+            app.UseStaticFiles(); //for bundeling and minification
             app.UseWebOptimizer();
 
-            app.UseRouting();
+            app.UseRouting(); // enables routing 
 
             app.UseAuthorization();
 
@@ -55,7 +71,7 @@ namespace TaskFlow1
             
             app.UseEndpoints(endpoints =>
             {
-                endpoints.AddRouteConfig();
+                endpoints.AddRouteConfig(); //use external method AddRouteConfig() for configuring routes 
             });
 
             app.Run();

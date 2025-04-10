@@ -14,7 +14,7 @@ namespace TaskFlow.Domain.Entities.Users
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("UserId",Order = 0, TypeName = "ushort")]
+        [Column("UserId",Order = 0, TypeName = "smallint")]
         public int Id { get; set; }
 
         [Required]
@@ -31,6 +31,6 @@ namespace TaskFlow.Domain.Entities.Users
 
         [Required]
         [Column(Order = 4)]
-        public string DataAdded { get; set; } = string.Empty;  
+        public DateTime DataAdded { get; set; }  
     }
 }
