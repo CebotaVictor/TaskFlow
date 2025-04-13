@@ -10,7 +10,6 @@
     <Folder Include="Contracts\" />
     <Folder Include="Interfaces\Services\" />
     <Folder Include="Users\Admin\" />
-    <Folder Include="Users\Members\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

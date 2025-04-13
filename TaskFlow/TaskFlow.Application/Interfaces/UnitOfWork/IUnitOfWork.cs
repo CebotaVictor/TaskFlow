@@ -13,6 +13,6 @@ namespace TaskFlow.Application.Interfaces.UnitOfWork
         public IGenericRepository<TEntity> Users { get; }
 
 
-        Task SaveChangesAsync();
+        Task<int> SaveChangesAsync();
     }
 }

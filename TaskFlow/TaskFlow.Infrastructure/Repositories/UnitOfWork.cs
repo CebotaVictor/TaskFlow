@@ -12,7 +12,7 @@ using TaskFlow.Infrastructure.BL;
 
 namespace TaskFlow.Infrastructure.Repositories
 {
-    internal class UnitOfWork<TEntity> : IUnitOfWork<TEntity> where TEntity : class
+    public class UnitOfWork<TEntity> : IUnitOfWork<TEntity> where TEntity : class
     {
         private readonly UsersDBContext _dbContext;
 
@@ -24,9 +24,9 @@ namespace TaskFlow.Infrastructure.Repositories
             Users = users;
         }
 
-        public async Task SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            await _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }

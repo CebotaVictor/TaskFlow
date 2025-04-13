@@ -15,7 +15,7 @@ namespace TaskFlow.Domain.Entities.Users
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("UserId",Order = 0, TypeName = "smallint")]
-        public int Id { get; set; }
+        public ushort Id { get; set; }
 
         [Required]
         [Column(Order = 2)]

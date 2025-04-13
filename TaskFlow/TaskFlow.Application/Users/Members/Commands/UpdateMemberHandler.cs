@@ -17,10 +17,10 @@ namespace TaskFlow.Application.Users.Members.Commands
 
         public UpdateMemberHandler(IGenericRepository<Member> user, IUnitOfWork<Member> UnitOfWork)
         {
-            _userRepository = user;
-            _unitOfWork = UnitOfWork;
+            _userRepository = user ?? throw new NullReferenceException("IGeneriRepository is null in UpdateMemberHandler");
+            _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in UpdateMemberHandler");
         }
-        public async Task<UserResponse> Handle(int id, CreateMemeberCommand request, CancellationToken token)
+        public async Task<UserResponse> Handle(ushort id, CreateMemeberCommand request, CancellationToken token)
         {
             try
             {

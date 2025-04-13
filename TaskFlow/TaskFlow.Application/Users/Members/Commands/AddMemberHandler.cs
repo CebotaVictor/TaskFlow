@@ -12,15 +12,15 @@ using TaskFlow.Domain.Entities.Users;
 
 namespace TaskFlow.Application.Users.Members.Commands
 {
-    public class AddMemberHandler 
+    public class AddMemberHandler : IRequestHandler<CreateMemeberCommand, UserResponse>
     {
         private IGenericRepository<Member> _userRepository;
         private IUnitOfWork<Member> _unitOfWork;
 
         public AddMemberHandler(IGenericRepository<Member> user, IUnitOfWork<Member> UnitOfWork)
         {   
-            _userRepository = user;
-            _unitOfWork = UnitOfWork; 
+            _userRepository = user ?? throw new NullReferenceException("IGeneriRepository is null in AddMemberHandler");
+            _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in AddMemberHandler");
         }
 
         public async Task<UserResponse> Handle(CreateMemeberCommand request, CancellationToken token)
@@ -37,7 +37,13 @@ namespace TaskFlow.Application.Users.Members.Commands
                     DataAdded = DateTime.Now
                 };
                 await _unitOfWork.Users.AddGeneric(newMember);
-                return new UserResponse(1,newMember.Email);
+                
+                if(await _unitOfWork.SaveChangesAsync() > 0)
+                {
+                    return new UserResponse(1,newMember.Email);
+                }
+
+                throw new Exception("Save changes did not worked as indended");
             }
             catch (Exception ex)
             {
