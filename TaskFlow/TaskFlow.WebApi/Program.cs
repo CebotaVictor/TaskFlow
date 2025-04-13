@@ -1,10 +1,10 @@
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using TaskFlow.Application.Contracts.Shared;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.UnitOfWork;
 using TaskFlow.Application.Users.Members.Commands;
-using TaskFlow.Application.Users.Members.Queries;
 using TaskFlow.Domain.Entities.Users;
 using TaskFlow.Infrastructure.BL;
 using TaskFlow.Infrastructure.Repositories;
@@ -44,7 +44,7 @@ namespace TaskFlow1
                     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
                     cfg.RegisterServicesFromAssemblyContaining<AddMemberCommand>();
                     cfg.RegisterServicesFromAssemblyContaining<UpdateMemberCommand>();
-                    cfg.RegisterServicesFromAssemblyContaining<GetMemberQuery>();
+                    cfg.RegisterServicesFromAssemblyContaining<GetMemberDTO>();
 
                 });
                 builder.Services.AddDbContext<UsersDBContext>(options =>

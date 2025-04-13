@@ -12,5 +12,5 @@ namespace TaskFlow.Application.Contracts.Shared
         string Username,
         string Password,
         string Email
-    );
+    ) : IRequest<UserResponse>;
 }

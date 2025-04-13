@@ -16,12 +16,10 @@ namespace TaskFlow.Application.Users.Members.Handlers
 {
     public class AddMemberHandler : IRequestHandler<AddMemberCommand, UserResponse>
     {
-        private IGenericRepository<Member> _userRepository;
         private IUnitOfWork<Member> _unitOfWork;
 
-        public AddMemberHandler(IGenericRepository<Member> user, IUnitOfWork<Member> UnitOfWork)
+        public AddMemberHandler(IUnitOfWork<Member> UnitOfWork)
         {   
-            _userRepository = user ?? throw new NullReferenceException("IGeneriRepository is null in AddMemberHandler");
             _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in AddMemberHandler");
         }
 

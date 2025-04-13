@@ -46,7 +46,7 @@ namespace TaskFlow.Infrastructure.Repositories
                     }
                 }
 
-                return false;
+                throw new NullReferenceException($"Error while deleting pacient {Id}");
             }
             catch (Exception ex)
             {

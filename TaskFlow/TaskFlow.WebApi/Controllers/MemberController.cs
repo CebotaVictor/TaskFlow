@@ -21,7 +21,8 @@ namespace TaskFlow.WebApi.Controllers
 
         private readonly IMediator _mediator;
 
-        public MemberController(IMediator mediator)
+       public MemberController(IMediator mediator) 
+
         {
             _mediator = mediator;
         }
@@ -34,10 +35,11 @@ namespace TaskFlow.WebApi.Controllers
         // GET: MemberController/Details/5
         [HttpGet]
         public async Task<ActionResult> GetAllMembers(CancellationToken token)
+
         {
             try
             {
-                var result = await _mediator.Send(new GetMemberQuery(), token);
+                var result = await _mediator.Send(new GetMemberDTO(), token);
                 if (result == null || !result.Any()) return NotFound(result);
 
                 return Ok(result);
@@ -74,15 +76,38 @@ namespace TaskFlow.WebApi.Controllers
             }
             try
             {
+
                 var result = await _mediator.Send(new AddMemberCommand{MemberField = Request}, token);   
                 if(result != null) return BadRequest(result);
                 return Ok(Request);
             }
+            catch(Exception ex) 
+            {
+                return BadRequest("Failed to retreive member list");
+            }
+        }
+
+
+        // POST: MemberController/Create
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] AddMemberCommand Request, CancellationToken token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _mediator.Send(Request, token);   
+                return Ok(Request);
+            }
             catch
             {
+
                 return BadRequest("Failed to create Member");
             }
         }
+
 
 
         //POST: MemberController/Edit/5
@@ -103,6 +128,28 @@ namespace TaskFlow.WebApi.Controllers
                 return BadRequest("Failed to update Member");
             }
         }
+
+        // GET: MemberController/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
+
+        // POST: MemberController/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
 
         // GET: MemberController/Delete/5
         //public ActionResult Delete(int id)
