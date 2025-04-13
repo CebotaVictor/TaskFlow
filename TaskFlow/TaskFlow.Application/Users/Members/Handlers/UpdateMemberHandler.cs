@@ -32,7 +32,12 @@ namespace TaskFlow.Application.Users.Members.Handlers
                 member.Username = request.MemberField.Username;
                 member.Password = request.MemberField.Password;
                 member.Id = request.Id;
-                return new UserResponse(1, member.Email);
+                if (await _unitOfWork.SaveChangesAsync() > 0)
+                {
+                    return new UserResponse(1, member.Email);
+                }
+
+                throw new Exception("Save changes did not worked as indended for UpdateMemberHandler");
             }
             catch (Exception ex)
             {

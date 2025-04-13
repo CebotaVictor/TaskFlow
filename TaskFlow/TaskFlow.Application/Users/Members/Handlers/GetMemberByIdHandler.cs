@@ -38,7 +38,7 @@ namespace TaskFlow.Application.Users.Members.Handlers
             }
             catch (Exception ex)
             {
-                _logger.LogError("GetEntityById returned null in the GetMemberByIdHandler");
+                _logger.LogError($"GetEntityById returned null in the GetMemberByIdHandler {ex.Message}");
                 return null;
             }
         }

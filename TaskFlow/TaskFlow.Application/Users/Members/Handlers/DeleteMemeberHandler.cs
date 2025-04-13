@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ using TaskFlow.Domain.Entities.Users;
 
 namespace TaskFlow.Application.Users.Members.Handlers
 {
-    public class DeleteMemeberHandler
+    public class DeleteMemeberHandler : IRequestHandler<DeleteMemberCommand, UserResponse>
     {
         private IUnitOfWork<Member> _unitOfWork;
 
@@ -28,7 +29,11 @@ namespace TaskFlow.Application.Users.Members.Handlers
             try
             {
                 await _unitOfWork.Users.DeletByIdGenericAsync(request.Id);
-                return new UserResponse(1, "Deleted Successfuly");
+                if (await _unitOfWork.SaveChangesAsync() > 0)
+                {
+                    return new UserResponse(1, "Successfully deleted");
+                }
+                throw new Exception($"Error while deleting the member with id {request.Id}");
             }
             catch (Exception ex)
             { 

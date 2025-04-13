@@ -1,16 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Framework;
-using NuGet.Common;
-using System.Reflection;
 using TaskFlow.Application.Contracts.Shared;
 using TaskFlow.Application.Interfaces.UnitOfWork;
 using TaskFlow.Application.Users.Members.Commands;
 using TaskFlow.Application.Users.Members.Queries;
 using TaskFlow.Domain.Entities.Users;
-
-
 
 namespace TaskFlow.WebApi.Controllers
 {
@@ -18,28 +13,19 @@ namespace TaskFlow.WebApi.Controllers
     [ApiController]
     public class MemberController : ControllerBase
     {
-
         private readonly IMediator _mediator;
 
        public MemberController(IMediator mediator) 
-
         {
             _mediator = mediator;
         }
-        // GET: MemberController
-        //public ActionResult CreateMemberView()
-        //{
-        //    return View();
-        //}
-
-        // GET: MemberController/Details/5
+       
         [HttpGet]
         public async Task<ActionResult> GetAllMembers(CancellationToken token)
-
         {
             try
             {
-                var result = await _mediator.Send(new GetMemberDTO(), token);
+                var result = await _mediator.Send(new GetMemberQuery(), token);
                 if (result == null || !result.Any()) return NotFound(result);
 
                 return Ok(result);
@@ -51,7 +37,6 @@ namespace TaskFlow.WebApi.Controllers
         }
 
         [HttpGet ("{id}")]
-
         public async Task<ActionResult> GetMemberById(ushort id, CancellationToken token)
         {
             try
@@ -66,7 +51,6 @@ namespace TaskFlow.WebApi.Controllers
             }
         }
 
-        // POST: MemberController/Create
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] MemberDTO Request, CancellationToken token)
         {
@@ -76,42 +60,17 @@ namespace TaskFlow.WebApi.Controllers
             }
             try
             {
-
                 var result = await _mediator.Send(new AddMemberCommand{MemberField = Request}, token);   
-                if(result != null) return BadRequest(result);
+                if(result == null) return BadRequest(result);
                 return Ok(Request);
             }
             catch(Exception ex) 
             {
-                return BadRequest("Failed to retreive member list");
+                return BadRequest($"Failed to create the member {ex.Message}");
             }
         }
 
-
-        // POST: MemberController/Create
-        [HttpPost]
-        public async Task<ActionResult> Create([FromBody] AddMemberCommand Request, CancellationToken token)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var result = await _mediator.Send(Request, token);   
-                return Ok(Request);
-            }
-            catch
-            {
-
-                return BadRequest("Failed to create Member");
-            }
-        }
-
-
-
-        //POST: MemberController/Edit/5
-        [HttpPut]
+        [HttpPut ("{id}")]
         public async Task<ActionResult> Edit([FromBody] MemberDTO Request, ushort id, CancellationToken token)
         {
             if (!ModelState.IsValid) { 
@@ -129,47 +88,19 @@ namespace TaskFlow.WebApi.Controllers
             }
         }
 
-        // GET: MemberController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        // POST: MemberController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-
-        // GET: MemberController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        // POST: MemberController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(ushort id, CancellationToken token)
+        {
+            try
+            {
+                var result = await _mediator.Send(new DeleteMemberCommand { Id = id }, token);
+                if(result != null) return Ok(result);
+                throw new Exception($"Error while deleting user with id {id} in MemberController");
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
     }
 }

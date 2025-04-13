@@ -45,7 +45,7 @@ namespace TaskFlow.Application.Users.Members.Handlers
                     return new UserResponse(1,newMember.Email);
                 }
 
-                throw new Exception("Save changes did not worked as indended");
+                throw new Exception("Save changes did not worked as indended for AddMemberHandler");
             }
             catch (Exception ex)
             {

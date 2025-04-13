@@ -26,9 +26,18 @@ namespace TaskFlow.Infrastructure.Repositories
 
         public async Task AddGeneric(TEntity entity)
         {
-            if (_dbSet != null)
-                await _dbSet.AddAsync(entity);
-            else throw new NullReferenceException($"_dbSet is null");
+            try
+            {
+                if (_dbSet != null)
+                    await _dbSet.AddAsync(entity);
+                else throw new NullReferenceException($"_dbSet is null");
+            }
+
+            catch(Exception ex)
+            {
+                _logger.LogError("Failed to create a new TEntity");
+                return;
+            }
         }
 
         public async Task<bool> DeletByIdGenericAsync(ushort Id)
