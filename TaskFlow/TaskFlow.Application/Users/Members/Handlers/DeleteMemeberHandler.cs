@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskFlow.Application.Contracts.Shared;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.UnitOfWork;
 using TaskFlow.Application.Users.Responses;
 using TaskFlow.Domain.Entities.Users;
 
-namespace TaskFlow.Application.Users.Members.Commands
+namespace TaskFlow.Application.Users.Members.Handlers
 {
     public class DeleteMemeberHandler
     {
@@ -17,12 +18,12 @@ namespace TaskFlow.Application.Users.Members.Commands
 
         public DeleteMemeberHandler(IGenericRepository<Member> user, IUnitOfWork<Member> UnitOfWork)
         {
-            _userRepository = user;
-            _unitOfWork = UnitOfWork;
+            _userRepository = user ?? throw new NullReferenceException("IGeneriRepository is null in UpdateMemberHandler");
+            _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in UpdateMemberHandler");
         }
 
 
-        public async Task<UserResponse> Handle(int id,CreateMemeberCommand request, CancellationToken token)
+        public async Task<UserResponse> Handle(ushort id,MemberDTO request, CancellationToken token)
         {
             if (request == null) { return new UserResponse(-1, "");}
             try

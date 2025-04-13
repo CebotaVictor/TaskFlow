@@ -1,80 +1,94 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.OpenApi.Models;
+using TaskFlow.Application.Interfaces.Repository;
+using TaskFlow.Application.Interfaces.UnitOfWork;
+using TaskFlow.Application.Users.Members.Commands;
+using TaskFlow.Application.Users.Members.Queries;
+using TaskFlow.Domain.Entities.Users;
 using TaskFlow.Infrastructure.BL;
-using TaskFlow.WebApi.Extensions;   
-
+using TaskFlow.Infrastructure.Repositories;
+using TaskFlow.WebApi.Extensions;
 namespace TaskFlow1
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+                var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddEndpointsApiExplorer();
+                // Add services to the container.
+                builder.Services.AddControllersWithViews();
+                builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
+                builder.Services.AddSwaggerGen(options =>
                 {
-                    Title = "TaskFlow API",
-                    Version = "v1"
+                    options.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Title = "TaskFlow API",
+                        Version = "v1"
+                    });
                 });
-            });
 
-            builder.Services.AddWebOptimizerConfig();
+                builder.Services.AddWebOptimizerConfig();
 
-            builder.Services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.Secure = CookieSecurePolicy.Always; // use CookieSecurePolicy for better security over https 
-            });
-
-            builder.Services.AddResponseCompression();
-
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-            builder.Services.AddDbContext<UsersDBContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            var app = builder.Build();
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
+                builder.Services.Configure<CookiePolicyOptions>(options =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskFlow API v1");
-                    c.RoutePrefix = "swagger";  // Access Swagger at /swagger
+                    options.Secure = CookieSecurePolicy.Always; // use CookieSecurePolicy for better security over https 
                 });
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
-            app.UseHttpsRedirection();
+                builder.Services.AddResponseCompression();
 
-            app.UseResponseCompression(); // for better performance optimisation 
+                builder.Services.AddMediatR(cfg => 
+                { 
+                    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+                    cfg.RegisterServicesFromAssemblyContaining<AddMemberCommand>();
+                    cfg.RegisterServicesFromAssemblyContaining<UpdateMemberCommand>();
+                    cfg.RegisterServicesFromAssemblyContaining<GetMemberQuery>();
 
-            app.UseStaticFiles(); //for bundeling and minification
-            app.UseWebOptimizer();
+                });
+                builder.Services.AddDbContext<UsersDBContext>(options =>
+                    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            app.UseRouting(); // enables routing 
+                builder.Services.AddScoped<IGenericRepository<Member>, GenericRepository<Member>>();
+                builder.Services.AddScoped<IUnitOfWork<Member>, UnitOfWork<Member>>();
 
-            app.UseAuthorization();
+                var app = builder.Build();
+                // Configure the HTTP request pipeline.
+                if (app.Environment.IsDevelopment())
+                {
+                    app.UseSwagger();
+                    app.UseSwaggerUI(c =>
+                    {
+                        c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskFlow API v1");
+                        c.RoutePrefix = "swagger";  // Access Swagger at /swagger
+                    });
+                }
+                else
+                {
+                    app.UseExceptionHandler("/Home/Error");
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                    app.UseHsts();
+                }
 
-            app.MapStaticAssets();
+                app.UseHttpsRedirection();
+
+                app.UseResponseCompression(); // for better performance optimisation 
+
+                app.UseStaticFiles(); //for bundeling and minification
+                app.UseWebOptimizer();
+
+                app.UseRouting(); // enables routing 
+
+                app.UseAuthorization();
+
+                app.MapStaticAssets();
             
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.AddRouteConfig(); //use external method AddRouteConfig() for configuring routes 
-            });
-
-            app.Run();
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.AddRouteConfig(); //use external method AddRouteConfig() for configuring routes 
+                });
+                app.Run();
+            }
         }
     }
-}

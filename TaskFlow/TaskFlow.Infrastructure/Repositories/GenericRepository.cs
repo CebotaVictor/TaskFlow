@@ -31,7 +31,7 @@ namespace TaskFlow.Infrastructure.Repositories
             else throw new NullReferenceException($"_dbSet is null");
         }
 
-        public async Task<bool> DeletByIdGenericAsync(int Id)
+        public async Task<bool> DeletByIdGenericAsync(ushort Id)
         {
             try
             {
@@ -57,19 +57,35 @@ namespace TaskFlow.Infrastructure.Repositories
 
         }
 
-        public async Task<TEntity> GetEntityById(int Id)
+        public async Task<TEntity> GetEntityById(ushort Id)
         {
-            if(_dbSet != null)
-                return await _dbSet.FindAsync(Id) ?? throw new NullReferenceException($"GetEntityById query returned null");
-            throw new NullReferenceException("GetEntityById got a null _dbSet");
+            try
+            {
+                if (_dbSet != null)
+                    return await _dbSet.FindAsync(Id) ?? throw new NullReferenceException($"GetEntityById query returned null for the GetAllEntitiesById");
+                throw new NullReferenceException("GetEntityById got a null _dbSet for the GetAllEntitiesById");
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError($"Error while deleting pacient {Id} {ex.Message}");
+                return null;
+            }
         }
 
 
         public async Task<IEnumerable<TEntity>> GetAllEntities()
         {
-            if( _dbSet != null)
-                return await _dbSet.ToListAsync() ?? throw new NullReferenceException($"GetAllEntities query returned null");
-            throw new NullReferenceException("GetAllEntities got a null _dbSet");
+            try
+            {
+                if (_dbSet != null)
+                    return await _dbSet.ToListAsync() ?? throw new NullReferenceException($"GetAllEntities query returned null for the GetAllEntities");
+                throw new NullReferenceException("GetAllEntities got a null _dbSet for the GetAllEntities");
+            }
+            catch (Exception ex) 
+            { 
+                _logger.LogError($"Error in GetAllEntities method \n{ex.Message}");
+                return Enumerable.Empty<TEntity>();
+            }
         }
     }
 }

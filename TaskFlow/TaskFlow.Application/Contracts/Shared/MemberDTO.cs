@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using TaskFlow.Application.Users.Responses;
 
-namespace TaskFlow.Application.Users.Members.Commands
+namespace TaskFlow.Application.Contracts.Shared
 {
-    public record  CreateMemeberCommand(
-        int MemeberId,
+    public record  MemberDTO(
         string Username,
         string Password,
         string Email

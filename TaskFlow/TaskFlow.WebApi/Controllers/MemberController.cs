@@ -1,83 +1,128 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
+using NuGet.Common;
+using System.Reflection;
+using TaskFlow.Application.Contracts.Shared;
+using TaskFlow.Application.Interfaces.UnitOfWork;
+using TaskFlow.Application.Users.Members.Commands;
+using TaskFlow.Application.Users.Members.Queries;
+using TaskFlow.Domain.Entities.Users;
+
+
 
 namespace TaskFlow.WebApi.Controllers
 {
-    public class MemberController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MemberController : ControllerBase
     {
-        // GET: MemberController
-        public ActionResult CreateMemberView()
+
+        private readonly IMediator _mediator;
+
+        public MemberController(IMediator mediator)
         {
-            return View();
+            _mediator = mediator;
         }
+        // GET: MemberController
+        //public ActionResult CreateMemberView()
+        //{
+        //    return View();
+        //}
 
         // GET: MemberController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public async Task<ActionResult> GetAllMembers(CancellationToken token)
         {
-            return View();
+            try
+            {
+                var result = await _mediator.Send(new GetMemberQuery(), token);
+                if (result == null || !result.Any()) return NotFound(result);
+
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest("Failed to retreive member list");
+            }
         }
 
-        // GET: MemberController/Create
-        public ActionResult Create()
+        [HttpGet ("{id}")]
+
+        public async Task<ActionResult> GetMemberById(ushort id, CancellationToken token)
         {
-            return View();
+            try
+            {
+                var result = await _mediator.Send(new GetMemberByIdQuery{id = id}, token);
+                if(result == null) return NotFound("Member by id not found");
+                return Ok(result);
+            }
+            catch (Exception ex) 
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // POST: MemberController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create([FromBody] MemberDTO Request, CancellationToken token)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _mediator.Send(new AddMemberCommand{MemberField = Request}, token);   
+                if(result != null) return BadRequest(result);
+                return Ok(Request);
             }
             catch
             {
-                return View();
+                return BadRequest("Failed to create Member");
             }
         }
 
-        // GET: MemberController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: MemberController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        //POST: MemberController/Edit/5
+        [HttpPut]
+        public async Task<ActionResult> Edit([FromBody] MemberDTO Request, ushort id, CancellationToken token)
         {
+            if (!ModelState.IsValid) { 
+                return BadRequest(ModelState);
+            }
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _mediator.Send(new UpdateMemberCommand {Id = id, MemberField = Request }, token);
+                if (result != null) return BadRequest("Failed to update member");
+                return Ok(result);
             }
             catch
             {
-                return View();
+                return BadRequest("Failed to update Member");
             }
         }
 
         // GET: MemberController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
         // POST: MemberController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
