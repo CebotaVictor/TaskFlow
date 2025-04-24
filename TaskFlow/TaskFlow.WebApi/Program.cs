@@ -10,7 +10,7 @@ using TaskFlow.Infrastructure.BL;
 using TaskFlow.Infrastructure.Repositories;
 using TaskFlow.WebApi.Extensions;
 namespace TaskFlow1
-{
+{                                                   
     public class Program
     {
         public static void Main(string[] args)
@@ -78,7 +78,6 @@ namespace TaskFlow1
 
             app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.UseWebOptimizer();
             app.MapStaticAssets();

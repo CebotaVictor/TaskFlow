@@ -10,6 +10,7 @@ using TaskFlow.Domain.Entities.Users;
 namespace TaskFlow.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    //[ApiExplorerSettings(GroupName = "member")]
     [ApiController]
     public class MemberController : ControllerBase
     {

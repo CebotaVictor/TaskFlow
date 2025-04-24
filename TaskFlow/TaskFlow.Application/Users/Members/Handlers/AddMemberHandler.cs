@@ -32,7 +32,6 @@ namespace TaskFlow.Application.Users.Members.Handlers
                 if (request.MemberField == null) return new UserResponse(-1, "");
                 Member newMember = new Member
                 {
-
                     Username = request.MemberField.Username,
                     Email = request.MemberField.Email,
                     Password = request.MemberField.Password,

@@ -8,22 +8,27 @@ namespace TaskFlow.WebApi.Extensions
         {
             endpoint.MapControllerRoute(
                 name: "Billing",
-                pattern: "{controller=Home}/{action=Biling}/{id?}")
+                pattern: "{controller=Home}/{action=Biling}")
                 .WithStaticAssets();
 
             endpoint.MapControllerRoute(
                 name: "Dashboard",
-                pattern: "{controller=Home}/{action=Dashboard}/{id?}")
+                pattern: "{controller=Home}/{action=Dashboard}")
                 .WithStaticAssets();
 
             endpoint.MapControllerRoute(
                 name: "Dashboard",
-                pattern: "{controller=Home}/{action=Template}/{id?}")
+                pattern: "{controller=Home}/{action=Template}")
                 .WithStaticAssets();
 
             endpoint.MapControllerRoute(
                 name: "Profile",
-                pattern: "{controller=Home}/{action=Profile}/{id?}")
+                pattern: "{controller=Home}/{action=Profile}")
+                .WithStaticAssets();
+
+            endpoint.MapControllerRoute(
+                name: "Register",
+                pattern: "{controller=Auth}/{action=Register}")
                 .WithStaticAssets();
 
             return endpoint;
