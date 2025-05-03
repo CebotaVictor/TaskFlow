@@ -11,6 +11,7 @@ namespace TaskFlow.Application.Interfaces.UnitOfWork
     public interface IUnitOfWork<TEntity>   where TEntity : class
     {
         public IGenericRepository<TEntity> Users { get; }
+        public IMemberRepository Members{ get; }
 
 
         Task<int> SaveChangesAsync();

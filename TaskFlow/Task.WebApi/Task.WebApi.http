@@ -1,0 +1,6 @@
+@Task.WebApi_HostAddress = http://localhost:5228
+
+GET {{Task.WebApi_HostAddress}}/api/member/6
+Accept: application/json
+
+###

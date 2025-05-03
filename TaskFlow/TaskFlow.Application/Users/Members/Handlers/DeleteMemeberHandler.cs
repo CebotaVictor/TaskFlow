@@ -31,7 +31,7 @@ namespace TaskFlow.Application.Users.Members.Handlers
                 await _unitOfWork.Users.DeletByIdGenericAsync(request.Id);
                 if (await _unitOfWork.SaveChangesAsync() > 0)
                 {
-                    return new UserResponse(1, "Successfully deleted");
+                    return new UserResponse(1, "Successfully deleted"); 
                 }
                 throw new Exception($"Error while deleting the member with id {request.Id}");
             }

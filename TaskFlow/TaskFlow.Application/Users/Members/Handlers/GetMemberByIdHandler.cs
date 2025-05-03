@@ -30,7 +30,7 @@ namespace TaskFlow.Application.Users.Members.Handlers
                 if (_unitOfWork == null) 
                 { 
                     _logger.LogError("unit o work is null in GetMemberByIdHandler");
-                    return null;
+                    return null!;
                 }
                 var result = _unitOfWork.Users.GetEntityById(request.id);
                 if(result == null) throw new NullReferenceException("GetEntityById returned null in the GetMemberByIdHandler");  
@@ -39,7 +39,7 @@ namespace TaskFlow.Application.Users.Members.Handlers
             catch (Exception ex)
             {
                 _logger.LogError($"GetEntityById returned null in the GetMemberByIdHandler {ex.Message}");
-                return null;
+                return null!;
             }
         }
     }

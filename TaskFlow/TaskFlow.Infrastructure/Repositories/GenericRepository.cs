@@ -7,19 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TaskFlow.Application.Interfaces.Repository;
+using TaskFlow.Domain.Entities.Users;
 using TaskFlow.Infrastructure.BL;
 
 namespace TaskFlow.Infrastructure.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private DbContext _context;
         private DbSet<TEntity>? _dbSet;
         private readonly ILogger<GenericRepository<TEntity>> _logger;
 
         public GenericRepository(UsersDBContext context, ILogger<GenericRepository<TEntity>> logger)
         {
-            this._context = context ?? throw new ArgumentNullException($"the PacientiDbContext is null ${nameof(context)}");
             this._dbSet = context.Set<TEntity>();
             this._logger = logger;
         }
@@ -35,7 +34,7 @@ namespace TaskFlow.Infrastructure.Repositories
 
             catch(Exception ex)
             {
-                _logger.LogError("Failed to create a new TEntity");
+                _logger.LogError($"Failed to create a new TEntity {ex.Message}");
                 return;
             }
         }
@@ -54,7 +53,6 @@ namespace TaskFlow.Infrastructure.Repositories
                         return true;
                     }
                 }
-
                 throw new NullReferenceException($"Error while deleting pacient {Id}");
             }
             catch (Exception ex)
@@ -62,8 +60,6 @@ namespace TaskFlow.Infrastructure.Repositories
                 _logger.LogError($"Error while deleting pacient {Id} {ex.Message}");
                 return false;
             }
-            
-
         }
 
         public async Task<TEntity> GetEntityById(ushort Id)
@@ -77,7 +73,7 @@ namespace TaskFlow.Infrastructure.Repositories
             catch (Exception ex) 
             {
                 _logger.LogError($"Error while deleting pacient {Id} {ex.Message}");
-                return null;
+                return null!;
             }
         }
 
@@ -96,5 +92,6 @@ namespace TaskFlow.Infrastructure.Repositories
                 return Enumerable.Empty<TEntity>();
             }
         }
+
     }
 }

@@ -11,6 +11,6 @@ namespace TaskFlow.Application.Users.Members.Commands
 {
     public class AddMemberCommand : IRequest<UserResponse>
     {
-        public MemberDTO? MemberField { get; set; }
+        public UserDTO? MemberField { get; set; }
     }
 }

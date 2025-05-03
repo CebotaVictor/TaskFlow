@@ -12,6 +12,6 @@ namespace TaskFlow.Application.Users.Members.Commands
     public class UpdateMemberCommand : IRequest<UserResponse>
     {
         public ushort Id { get; set; }
-        public MemberDTO ? MemberField { get; set; }
+        public UserDTO ? MemberField { get; set; }
     }
 }
