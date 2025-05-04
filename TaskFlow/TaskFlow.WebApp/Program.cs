@@ -28,34 +28,19 @@ namespace TaskFlow1
                 options.Secure = CookieSecurePolicy.Always; // use CookieSecurePolicy for better security over https 
             });
 
-            builder.Services.AddResponseCompression();
-            builder.Services.AddMediatR(cfg =>
-            {
-                cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
-                cfg.RegisterServicesFromAssemblyContaining<UpdateMemberCommand>();
-                cfg.RegisterServicesFromAssemblyContaining<AddMemberCommand>();
-                cfg.RegisterServicesFromAssemblyContaining<GetMemberQuery>();
-                cfg.RegisterServicesFromAssemblyContaining<DeleteMemberCommand>();
-
-            });
             builder.Services.AddDbContext<UsersDBContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddScoped<IGenericRepository<Member>, GenericRepository<Member>>();
-            builder.Services.AddScoped<IUnitOfWork<Member>, UnitOfWork<Member>>();
-
             builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskFlow API v1");
-                    c.RoutePrefix = "swagger";  // Access Swagger at /swagger
-                });
             }
             else
             {
@@ -65,7 +50,8 @@ namespace TaskFlow1
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles(); 
+            app.UseStaticFiles();
+
 
             app.UseResponseCompression(); 
             app.UseRouting(); 
