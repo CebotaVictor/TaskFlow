@@ -19,7 +19,6 @@ namespace Task.WebApi.Controllers
         {
             _mediator = mediator;
         }
-
         [HttpGet]
         public async Task<ActionResult> GetAllMembers(CancellationToken token)
         {

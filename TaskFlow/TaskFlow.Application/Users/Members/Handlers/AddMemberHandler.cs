@@ -20,7 +20,7 @@ namespace TaskFlow.Application.Users.Members.Handlers
 
         public AddMemberHandler(IUnitOfWork<Member> UnitOfWork)
         {   
-            _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in AddMemberHandler");
+            _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGenericRepository is null in AddMemberHandler");
         }
 
         public async Task<UserResponse> Handle(AddMemberCommand request, CancellationToken token)

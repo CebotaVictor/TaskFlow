@@ -19,7 +19,7 @@ namespace TaskFlow.Domain.Entities.Users
 
         [Required]
         [Column(Order = 2)]
-        public string Username {get; set;} =string.Empty;
+        public string Username {get; set;} = string.Empty;
 
         [Required]
         [Column(Order = 3)]

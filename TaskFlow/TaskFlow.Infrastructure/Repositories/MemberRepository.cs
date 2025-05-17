@@ -32,7 +32,7 @@ namespace TaskFlow.Infrastructure.Repositories
         public async Task<Member> GetMemberByEmail(string Email)
         {
             var fetchedmember = await _context!.Members.FirstOrDefaultAsync(x => x.Email == Email);
-            if (fetchedmember == null) { _logger.LogError("Fail to fetch member by email");  return null!; }
+            if (fetchedmember == null) { _logger.LogInformation("Fail to fetch member by email");  return null!; }
             return fetchedmember;
         }
     }
