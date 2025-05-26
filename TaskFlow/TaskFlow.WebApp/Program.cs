@@ -1,6 +1,8 @@
-    using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using System.IO.Compression;
 using System.Reflection;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.UnitOfWork;
@@ -32,15 +34,30 @@ namespace TaskFlow1
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddAutoMapper(typeof(Program));
+                
             builder.Services.AddResponseCompression(options =>
             {
-                options.EnableForHttps = true;
+                options.EnableForHttps = false;
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
+            });
+
+
+            builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Fastest;
+            });
+
+            builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.SmallestSize;
             });
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseResponseCompression();
             }
             else
             {
@@ -51,7 +68,7 @@ namespace TaskFlow1
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
 
             app.UseResponseCompression(); 
             app.UseRouting(); 

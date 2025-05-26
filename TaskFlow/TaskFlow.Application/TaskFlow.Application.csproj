@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Users\Admin\" />
+    <Folder Include="WorkFlow\Project\Commnad\" />
+    <Folder Include="WorkFlow\Project\Handler\" />
+    <Folder Include="WorkFlow\Section\Command\" />
+    <Folder Include="WorkFlow\Section\Handler\" />
   </ItemGroup>
 
   <ItemGroup>

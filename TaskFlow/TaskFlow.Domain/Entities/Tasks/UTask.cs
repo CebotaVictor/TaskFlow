@@ -9,7 +9,7 @@ using TaskFlow.Domain.Enums;
 namespace TaskFlow.Domain.Entities.Tasks
 {
     [Table("tasks", Schema = "TaskFlow")]
-    public class Task
+    public class UTask
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -31,13 +31,13 @@ namespace TaskFlow.Domain.Entities.Tasks
         public DateTime? CreatedAt { get; set; } = DateTime.Now.Date;
 
         [Column(Order = 5)]
-        public DateTime? DueDate { get; set; }
+        public DateTime? DueDate { get; set; }  
 
         [Column(TypeName = "smallint")]
         public ushort? ParentTaskId { get; set; }
 
         [Column(TypeName = "smallint")]
         public ushort ProjectId { get; set; }
-        public ICollection<Task> Tasks { get; } = new List<Task>();
+        public ICollection<UTask> Tasks { get; } = new List<UTask>();
     }
 }

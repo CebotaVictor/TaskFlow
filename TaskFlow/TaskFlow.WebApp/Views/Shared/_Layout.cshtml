@@ -24,8 +24,8 @@
 </head>
 
 <body>
-     @await Html.PartialAsync("_Aside")     
-     @RenderSection("Menu", false)
+     @await Html.PartialAsync("_Aside", true) 
+     @await RenderSectionAsync("Menu", true)
 
      <div class="container">
           <main role="main" class="pb-3">
