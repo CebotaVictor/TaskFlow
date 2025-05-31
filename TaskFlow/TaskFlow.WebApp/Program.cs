@@ -38,26 +38,25 @@ namespace TaskFlow1
             builder.Services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = false;
-                options.Providers.Add<BrotliCompressionProvider>();
-                options.Providers.Add<GzipCompressionProvider>();
+                //options.Providers.Add<BrotliCompressionProvider>();
+                //options.Providers.Add<GzipCompressionProvider>();
             });
 
+            //builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+            //{
+            //    options.Level = CompressionLevel.Fastest;
+            //});
 
-            builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
-            {
-                options.Level = CompressionLevel.Fastest;
-            });
-
-            builder.Services.Configure<GzipCompressionProviderOptions>(options =>
-            {
-                options.Level = CompressionLevel.SmallestSize;
-            });
+            //builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+            //{
+            //    options.Level = CompressionLevel.SmallestSize;
+            //});
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseResponseCompression();
+                //app.UseResponseCompression();
             }
             else
             {

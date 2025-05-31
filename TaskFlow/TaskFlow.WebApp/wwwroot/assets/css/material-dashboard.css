@@ -186,6 +186,88 @@
   --bs-form-invalid-border-color: rgb(245.4, 107.16, 107.16);
 }
 
+
+.project-item {
+     position: relative;
+}
+
+.project-actions {
+     display: none;
+     /*position: absolute;
+     right: 0.75rem;
+     top: 57%;
+     transform: translateY(-50%);*/
+     margin-left: auto; /* Pushes it to the far right within the flex container */
+     align-self: center; /* Vertically centers it within the flex container */
+     cursor: pointer;
+     z-index: 1;
+     
+}
+
+.project-item:hover .project-actions {
+     display: inline-flex;
+}
+
+.project-dropdown {
+     display: none;
+     padding-left: 2rem;
+     position: relative;
+     z-index: 1; /* Prevent overlap glitches */
+}
+
+.project-dropdown.show {
+     display: block;
+}
+
+
+.dropdown-toggle-project {
+     position: relative;
+}
+
+
+.dropdown-toggle-icon {
+     font-size: 0.75rem;
+     cursor: pointer;
+     border-radius: 4px;
+     transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-toggle-icon:hover {
+     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.project-dropdown-menu {
+     position: absolute;
+     top: 100%; /* Right below the button */
+     left: 0;
+     z-index: 100;
+     background-color: #fff;
+     border: 1px solid #ccc;
+     border-radius: 0.5rem;
+     padding: 0.5rem 0;
+     display: none;
+}
+
+.project-dropdown-menu.show {
+     display: block;
+}
+
+.project-dropdown-menu a {
+     display: flex;
+     align-items: center;
+     padding: 0.5rem 1rem;
+     color: #212529;
+     text-decoration: none;
+}
+
+.project-dropdown-menu a:hover {
+     background-color: #f8f9fa;
+}
+
+.project-dropdown-menu i {
+     margin-right: 0.5rem;
+}
+
 *,
 *::before,
 *::after {
@@ -4764,7 +4846,6 @@ fieldset:disabled .btn {
 .nav {
   --bs-nav-link-padding-x: 1rem;
   --bs-nav-link-padding-y: 0.5rem;
-  --bs-nav-link-font-weight: ;
   --bs-nav-link-color: var(--bs-link-color);
   --bs-nav-link-hover-color: var(--bs-link-hover-color);
   --bs-nav-link-disabled-color: #525252;
@@ -21855,7 +21936,6 @@ fieldset:disabled .btn {
   vertical-align: middle;
   margin-top: -1px;
   margin-bottom: -1px;
-  font-size: 1.1rem;
   display: inline-block;
   top: 0;
 }
@@ -29149,5 +29229,6 @@ pre[class*=language-] {
     overflow: auto !important;
   }
 }
+
 
 /*# sourceMappingURL=dashboard-free.css.map */

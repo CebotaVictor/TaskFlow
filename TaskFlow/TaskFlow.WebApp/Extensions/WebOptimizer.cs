@@ -8,6 +8,7 @@
             {
                 pipeline.AddCssBundle("/css/bundle.css", "assets/css/nucleo-icons.css", "assets/css/nucleo-svg.css");
                 pipeline.AddJavaScriptBundle("/js/bundle.js", "assets/js/material-dashboard.min.js");
+                pipeline.AddJavaScriptBundle("/js/core.js", "assets/js/core/bootstrap.bundle.min.js", "assets/js/core/bootstrap.min.js", "assets/js/core/popper.min.js");
                 pipeline.MinifyCssFiles();
                 pipeline.MinifyJsFiles();
             });

@@ -13,13 +13,13 @@ namespace TaskFlow.WebApi.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IMapper _mapper;
-        private readonly UserManager<Member> _userManager;
+        //private readonly IMapper _mapper;
+        //private readonly UserManager<Member> _userManager;
 
-        public AuthController(IMapper mapper, UserManager<Member> userMenager)
+        public AuthController()
         {
-            _mapper = mapper;
-            _userManager = userMenager;
+            //_mapper = mapper;
+            //_userManager = userMenager;
         }
 
         // GET: AuthController
@@ -29,29 +29,35 @@ namespace TaskFlow.WebApi.Controllers
             return View();
         }
 
-        // GET: AuthController/Details/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterRequest request, CancellationToken token)
+        [HttpGet]
+        public ActionResult Login()
         {
-            if (!ModelState.IsValid)
-            {
-                return View(request);
-            }
-
-            var member = _mapper.Map<Member>(request);
-            var result = await _userManager.CreateAsync(member, request.Password);
-            if (!result.Succeeded)
-            {
-                foreach(var error in result.Errors)
-                {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-
-                return View(request);
-            }
-            return View(request);
+            return View();
         }
+
+        // GET: AuthController/Details/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Register(RegisterRequest request, CancellationToken token)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(request);
+        //    }
+
+        //    var member = _mapper.Map<Member>(request);
+        //    var result = await _userManager.CreateAsync(member, request.Password);
+        //    if (!result.Succeeded)
+        //    {
+        //        foreach(var error in result.Errors)
+        //        {
+        //            ModelState.TryAddModelError(error.Code, error.Description);
+        //        }
+
+        //        return View(request);
+        //    }
+        //    return View(request);
+        //}
 
         // GET: AuthController/Create
         //public ActionResult Create()

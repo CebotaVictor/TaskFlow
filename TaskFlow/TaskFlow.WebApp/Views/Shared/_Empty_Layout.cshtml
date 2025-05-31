@@ -14,21 +14,17 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
      <!-- Main CSS -->
-     @* <link id="pagestyle" rel="stylesheet" href="@Url.Content("~/assets/css/material-dashboard.css?v=3.2.0")" /> *@
+     <link id="pagestyle" rel="stylesheet" href="@Url.Content("~/assets/css/material-dashboard.css?v=3.2.0")" />
 
 </head>
 
-<body>
-     @await RenderSectionAsync("Menu", true)
+<body>     
+          @await RenderSectionAsync("Section", true)
 
-     <div class="container">
-          <main role="main" class="pb-3">
-               @RenderBody()
-          </main>
-     </div>
-
+          @RenderBody()
 
      <script src="@Url.Content("/js/bundle.js")"></script>
+     <script src="@Url.Content("/js/core.js")"></script>
 
 </body>
 </html>

@@ -31,6 +31,11 @@ namespace TaskFlow.WebApi.Extensions
                 pattern: "{controller=Auth}/{action=Register}")
                 .WithStaticAssets();
 
+            endpoint.MapControllerRoute(
+            name: "Register",
+            pattern: "{controller=Auth}/{action=Login}")
+            .WithStaticAssets();
+
             return endpoint;
         }
     }

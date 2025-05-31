@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskFlow.Domain.Entities.Label;
+using TaskFlow.Domain.Entities.Labels;
 
-namespace TaskFlow.Domain.Entities.Project
+namespace TaskFlow.Domain.Entities.Projects
 {
     [Table("project", Schema = "TaskFlow")]
     public class Project
@@ -28,7 +28,6 @@ namespace TaskFlow.Domain.Entities.Project
         public ushort UserId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime EndDate { get; set; }
-
         public ICollection<Section> Sections { get; } = new List<Section>();
     }
 }

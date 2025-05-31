@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskFlow.Domain.Entities.Label
+using TaskFlow.Domain.Entities.Projects;
+
+namespace TaskFlow.Domain.Entities.Labels
 {
     [Table("sections", Schema = "TaskFlow")]
     public class Section
@@ -23,5 +25,6 @@ namespace TaskFlow.Domain.Entities.Label
         public ushort ProjectId { get; set; }
 
         public ICollection<Task> Tasks { get;} = new List<Task>();
+        public Project Project { get; set; } = null!;
     }
 }

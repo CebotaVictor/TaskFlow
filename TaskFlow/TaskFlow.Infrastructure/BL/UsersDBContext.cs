@@ -11,6 +11,10 @@ namespace TaskFlow.Infrastructure.BL
 {
     public class UsersDBContext : DbContext
     {
+        public UsersDBContext()
+        {
+        }
+
         public UsersDBContext(DbContextOptions<UsersDBContext> options)
             :base(options)
         {
