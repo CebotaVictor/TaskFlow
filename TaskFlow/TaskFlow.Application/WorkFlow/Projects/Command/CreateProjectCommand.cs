@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
+using TaskFlow.Application.Contracts.Shared;
 
-namespace TaskFlow.Application.WorkFlow.Project.Command
+namespace TaskFlow.Application.WorkFlow.Projects.Command
 {
-    public class CreateProjectCommand
+    public class CreateProjectCommand : IRequest<WorkflowResponse>
     {
         public ushort Id { get; set; }        
         public string Name { get; set; } = string.Empty;

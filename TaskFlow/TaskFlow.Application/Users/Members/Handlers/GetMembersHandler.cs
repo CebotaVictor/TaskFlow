@@ -13,9 +13,9 @@ namespace TaskFlow.Application.Users.Members.Handlers
 {
     public class GetMembersHandler : IRequestHandler<GetMemberQuery, IEnumerable<Member>>
     {
-        private readonly IUnitOfWork<Member> _unitOfWork;
+        private readonly IUsersUnitOfWork _unitOfWork;
         
-        public GetMembersHandler(IUnitOfWork<Member> unitOfWork)
+        public GetMembersHandler(IUsersUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new NullReferenceException("IUnitOfWork is null in GetMemberHandler");
         }

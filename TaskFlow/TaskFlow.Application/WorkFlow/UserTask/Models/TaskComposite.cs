@@ -9,7 +9,6 @@ using TaskFlow.Application.WorkFlow.UserTask.Interface;
 using TaskFlow.Domain.Enums;
 using TaskFlow.Domain.Entities.Tasks;
 using System.Reflection;
-using TaskFlow.Application.WorkFlow.UserTask.Mapping;
 
 namespace TaskFlow.Application.WorkFlow.UserTask.Contracts
 {
@@ -27,11 +26,11 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Contracts
 
         public TaskState isCompleted()
         {
-            if(Tasks.Count() == 0)
+            if(Tasks!.Count() == 0)
             {
                 return this.Status;
             }
-            return Tasks.All(task => task.isCompleted() == TaskState.Complete) ? TaskState.Complete : TaskState.InProgres;
+            return Tasks!.All(task => task.isCompleted() == TaskState.Complete) ? TaskState.Complete : TaskState.InProgres;
         }
     }
 }

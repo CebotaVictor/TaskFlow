@@ -15,9 +15,9 @@ namespace TaskFlow.Application.Users.Members.Handlers
 {
     public class DeleteMemeberHandler : IRequestHandler<DeleteMemberCommand, UserResponse>
     {
-        private IUnitOfWork<Member> _unitOfWork;
+        private IUsersUnitOfWork _unitOfWork;
 
-        public DeleteMemeberHandler(IUnitOfWork<Member> UnitOfWork)
+        public DeleteMemeberHandler(IUsersUnitOfWork UnitOfWork)
         {
             _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in UpdateMemberHandler");
         }

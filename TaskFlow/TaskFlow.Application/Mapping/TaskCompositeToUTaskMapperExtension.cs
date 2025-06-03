@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TaskFlow.Application.WorkFlow.UserTask.Contracts;
 using TaskFlow.Domain.Entities.Tasks;
 
-namespace TaskFlow.Application.WorkFlow.UserTask.Mapping
+namespace TaskFlow.Application.Mapping
 {
     public static class TaskCompositeToUTaskMapperExtension
     {

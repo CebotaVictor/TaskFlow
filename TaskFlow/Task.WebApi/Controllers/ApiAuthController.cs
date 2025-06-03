@@ -28,6 +28,10 @@ namespace Task.WebApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestApi request, CancellationToken token)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             RegisterCommand command = new RegisterCommand
             {
@@ -48,6 +52,10 @@ namespace Task.WebApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken token)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             LoginQuery query = new LoginQuery(request.Email,request.password);
 
             var response = await _mediator!.Send(query,token);

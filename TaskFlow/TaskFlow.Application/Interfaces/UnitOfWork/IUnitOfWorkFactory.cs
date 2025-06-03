@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskFlow.Application.WorkFlow.Project.Handler
+namespace TaskFlow.Application.Interfaces.UnitOfWork
 {
-    public class CreateProjectCommandHandler
+    public interface IUnitOfWorkFactory
     {
+
     }
 }

@@ -8,9 +8,10 @@ using TaskFlow.Domain.Entities.Users;
 
 namespace TaskFlow.Application.Interfaces.UnitOfWork
 {
-    public interface IUnitOfWork<TEntity>   where TEntity : class
+    public interface IUsersUnitOfWork
     {
-        public IGenericRepository<TEntity> Users { get; }
+        public IUsersGenericRepository<Member> Users { get; }
+        public IUsersGenericRepository<Admin> Admins { get; }
         public IMemberRepository Members{ get; }
 
 

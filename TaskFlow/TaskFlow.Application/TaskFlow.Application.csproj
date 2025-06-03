@@ -10,6 +10,7 @@
     <Folder Include="Users\Admin\" />
     <Folder Include="WorkFlow\Section\Command\" />
     <Folder Include="WorkFlow\Section\Handler\" />
+    <Folder Include="WorkFlow\UserTask\Mapping\" />
   </ItemGroup>
 
   <ItemGroup>

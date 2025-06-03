@@ -13,10 +13,10 @@ namespace TaskFlow.Application.Users.Members.Handlers
 {
     public class GetMemberByIdHandler : IRequestHandler<GetMemberByIdQuery, Member>
     {
-        public IUnitOfWork<Member> ?_unitOfWork;
+        public IUsersUnitOfWork ?_unitOfWork;
         public ILogger<GetMemberByIdHandler> _logger;
         
-        public GetMemberByIdHandler(IUnitOfWork<Member> unitOfWork, ILogger<GetMemberByIdHandler> logger) 
+        public GetMemberByIdHandler(IUsersUnitOfWork unitOfWork, ILogger<GetMemberByIdHandler> logger) 
         {
             _unitOfWork = unitOfWork ?? throw new NullReferenceException("unit o work is null in GetMemberByIdHandler");
             _logger = logger ?? throw new NullReferenceException("unit o work is null in GetMemberByIdHandler");

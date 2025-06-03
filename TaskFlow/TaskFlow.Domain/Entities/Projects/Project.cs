@@ -19,15 +19,15 @@ namespace TaskFlow.Domain.Entities.Projects
         public ushort Id { get; set; }
 
         [Column("ProjectName", Order = 1)]
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; } = string.Empty;
 
         [Column("ProjectDescription", Order = 2)]
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
 
         [Column(Order = 3, TypeName = "smallint")]
-        public ushort UserId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime EndDate { get; set; }
-        public ICollection<Section> Sections { get; } = new List<Section>();
+        public ushort? UserId { get; set; }
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? EndDate { get; set; }
+        public ICollection<Section> Sections { get; } =     new List<Section>();
     }
 }

@@ -22,10 +22,10 @@ using TaskFlow.Helpers.Service;
 namespace TaskFlow.Application.Autentication.Handlers
 {
     
-    public class RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUnitOfWork<Member> unitOfWork, IMediator mediator, IConfiguration configuration, IPassword paswdHandling) : IRequestHandler<RegisterCommand, UserResponse>
+    public class RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUsersUnitOfWork unitOfWork, IMediator mediator, IConfiguration configuration, IPassword paswdHandling) : IRequestHandler<RegisterCommand, UserResponse>
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator = jwtTokenGenerator;
-        private readonly IUnitOfWork<Member>? _unitOfWork = unitOfWork;
+        private readonly IUsersUnitOfWork? _unitOfWork = unitOfWork;
         private readonly IMediator _mediator = mediator;
         private readonly IConfiguration _configuration = configuration;
         private readonly IPassword ? _paswdHandling = paswdHandling;

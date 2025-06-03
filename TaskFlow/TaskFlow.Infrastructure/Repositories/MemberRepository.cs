@@ -18,11 +18,11 @@ namespace TaskFlow.Infrastructure.Repositories
 {
     public class MemberRepository : IMemberRepository
     {
-        private readonly GenericRepository<Member> ?_repository;
+        private readonly UsersGenericRepository<Member> ?_repository;
         private readonly UsersDBContext ?_context;
         private readonly ILogger<MemberRepository> _logger;
 
-        public MemberRepository(GenericRepository<Member> repository, UsersDBContext context, ILogger<MemberRepository> logger, IConfiguration configuration)
+        public MemberRepository(UsersGenericRepository<Member> repository, UsersDBContext context, ILogger<MemberRepository> logger, IConfiguration configuration)
         {
             _repository = repository;
             _context = context;

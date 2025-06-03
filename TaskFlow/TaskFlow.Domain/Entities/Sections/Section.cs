@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using TaskFlow.Domain.Entities.Projects;
+using TaskFlow.Domain.Entities.Tasks;
 
 namespace TaskFlow.Domain.Entities.Labels
 {
@@ -16,15 +17,15 @@ namespace TaskFlow.Domain.Entities.Labels
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("SectionId", Order = 0, TypeName = "smallint")]
-        public int Id { get; set; }
+        public ushort ?Id { get; set; }
 
-        [Column("SectionName", Order = 1, TypeName = "smallint")]
-        public string Name { get; set; } = string.Empty;
+        [Column("SectionName", Order = 1)]
+        public string ?Name { get; set; } = string.Empty;
 
         [Column(TypeName = "smallint")]
-        public ushort ProjectId { get; set; }
+        public ushort? ProjectId { get; set; }
 
-        public ICollection<Task> Tasks { get;} = new List<Task>();
-        public Project Project { get; set; } = null!;
+        public ICollection<UTask> Tasks { get;} = new List<UTask>();
+        public Project ?Project { get; set; } = null!;
     }
 }

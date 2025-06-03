@@ -16,9 +16,9 @@ using TaskFlow.Domain.Entities.Users;
 
 namespace TaskFlow.Application.Autentication.Handlers
 {
-    public class LoginCommandHandler (IUnitOfWork<Member> unitOfWork, IMediator mediator, IJwtTokenGenerator jwtTokenGenerator, IPassword paswdHandling) : IRequestHandler<LoginQuery, AutenticationResponse>
+    public class LoginCommandHandler (IUsersUnitOfWork unitOfWork, IMediator mediator, IJwtTokenGenerator jwtTokenGenerator, IPassword paswdHandling) : IRequestHandler<LoginQuery, AutenticationResponse>
     {
-        private readonly IUnitOfWork<Member> ?_unitOfWork = unitOfWork ?? throw new NullReferenceException("Unit of work is null");
+        private readonly IUsersUnitOfWork ?_unitOfWork = unitOfWork ?? throw new NullReferenceException("Unit of work is null");
         private readonly IMediator ?_mediator = mediator;
         private readonly IJwtTokenGenerator ?_jwtTokenGenerator = jwtTokenGenerator ?? throw new NullReferenceException("Token Generator is null");
         private readonly IPassword? _paswdHandling = paswdHandling;

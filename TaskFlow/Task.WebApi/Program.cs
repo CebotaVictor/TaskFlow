@@ -37,8 +37,12 @@ namespace Task.WebApi
 
             builder.Services.AddResponseCompression();
             
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
+
             builder.Services.AddDbContext<UsersDBContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<WorkflowDBContext>(options =>
+                options.UseSqlServer(connectionString));
 
 
             builder.Services.AddMediator(builder.Configuration, builder.Configuration);

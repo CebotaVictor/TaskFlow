@@ -15,10 +15,10 @@ using TaskFlow.Domain.Entities.Users;
 namespace TaskFlow.Application.Users.Members.Handlers
 {
     public class AddMemberHandler : IRequestHandler<AddMemberCommand, UserResponse>
-    {
-        private IUnitOfWork<Member> _unitOfWork;
+    {   
+        private IUsersUnitOfWork _unitOfWork;
 
-        public AddMemberHandler(IUnitOfWork<Member> UnitOfWork)
+        public AddMemberHandler(IUsersUnitOfWork UnitOfWork)
         {   
             _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGenericRepository is null in AddMemberHandler");
         }

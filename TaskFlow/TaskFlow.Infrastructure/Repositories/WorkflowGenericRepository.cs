@@ -5,19 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using TaskFlow.Application.Interfaces.Repository;
-using TaskFlow.Domain.Entities.Users;
+using TaskFlow.Application.Interfaces.UnitOfWork;
 using TaskFlow.Infrastructure.BL;
 
 namespace TaskFlow.Infrastructure.Repositories
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class WorkflowGenericRepository<TEntity> : IWorkflowGenericRepository<TEntity>
+        where TEntity : class
     {
         private DbSet<TEntity>? _dbSet;
-        private readonly ILogger<GenericRepository<TEntity>> _logger;
+        private readonly ILogger<WorkflowGenericRepository<TEntity>> _logger;
 
-        public GenericRepository(UsersDBContext context, ILogger<GenericRepository<TEntity>> logger)
+        public WorkflowGenericRepository(WorkflowDBContext context, ILogger<WorkflowGenericRepository<TEntity>> logger)
         {
             this._dbSet = context.Set<TEntity>();
             this._logger = logger;
@@ -32,7 +32,7 @@ namespace TaskFlow.Infrastructure.Repositories
                 else throw new NullReferenceException($"_dbSet is null");
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Failed to create a new TEntity {ex.Message}");
                 return;
@@ -70,7 +70,7 @@ namespace TaskFlow.Infrastructure.Repositories
                     return await _dbSet.FindAsync(Id) ?? throw new NullReferenceException($"GetEntityById query returned null for the GetAllEntitiesById");
                 throw new NullReferenceException("GetEntityById got a null _dbSet for the GetAllEntitiesById");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 _logger.LogError($"Error while deleting pacient {Id} {ex.Message}");
                 return null!;
@@ -86,8 +86,8 @@ namespace TaskFlow.Infrastructure.Repositories
                     return await _dbSet.ToListAsync() ?? throw new NullReferenceException($"GetAllEntities query returned null for the GetAllEntities");
                 throw new NullReferenceException("GetAllEntities got a null _dbSet for the GetAllEntities");
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 _logger.LogError($"Error in GetAllEntities method \n{ex.Message}");
                 return Enumerable.Empty<TEntity>();
             }

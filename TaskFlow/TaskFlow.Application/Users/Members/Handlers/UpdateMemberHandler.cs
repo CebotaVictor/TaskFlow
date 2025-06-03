@@ -15,9 +15,9 @@ namespace TaskFlow.Application.Users.Members.Handlers
 {
     public class UpdateMemberHandler : IRequestHandler<UpdateMemberCommand, UserResponse>
     {
-        private IUnitOfWork<Member> _unitOfWork;
+        private IUsersUnitOfWork _unitOfWork;
 
-        public UpdateMemberHandler(IGenericRepository<Member> user, IUnitOfWork<Member> UnitOfWork)
+        public UpdateMemberHandler(IUsersGenericRepository<Member> user, IUsersUnitOfWork UnitOfWork)
         {
             _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in UpdateMemberHandler");
         }
