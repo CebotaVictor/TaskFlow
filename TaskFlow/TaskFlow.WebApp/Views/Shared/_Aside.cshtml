@@ -4,6 +4,7 @@
 @{
 }
 
+
 <script>
      function showProjectModal() {
        const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
@@ -67,10 +68,21 @@
 
                                    <div class="project-dropdown-menu" id="projectDropdownMenu">
                                         <button type="button" class="nav-link text-dark ps-4 bg-transparent border-0" onclick="showProjectModal()">
-    <i class="material-symbols-rounded opacity-5">add_circle</i>
-    <span class="nav-link-text ms-2">New Project</span>
-</button>
+                                             <i class="material-symbols-rounded opacity-5">add_circle</i>
+                                             <span class="nav-link-text ms-2">New Project</span>
+                                        </button>
 
+                                        <button type="button" class="nav-link text-dark ps-4 bg-transparent border-0">
+                                             <a class="@(ViewData["ActivePage"] as string == "Template" ? "active bg-gradient-dark text-white" : "text-dark")" href="@Url.Action("ProjectBoardView", "Workflow")">ProjectBoardView</a>
+                                        </button>
+
+                                        <button type="button" class="nav-link text-dark ps-4 bg-transparent border-0">
+                                             <a class="@(ViewData["ActivePage"] as string == "Template" ? "active bg-gradient-dark text-white" : "text-dark")" href="@Url.Action("ProjectListView", "Workflow")">ProjectListView</a>
+                                        </button>
+
+                                        <button type="button" class="nav-link text-dark ps-4 bg-transparent border-0">
+                                             <a class="@(ViewData["ActivePage"] as string == "Template" ? "active bg-gradient-dark text-white" : "text-dark")" href="@Url.Action("ViewPage", "Workflow")">ProjectListView</a>
+                                        </button>
                                    </div>
                               </div>
                          </div>
@@ -89,6 +101,7 @@
                                    <span class="nav-link-text ms-2">New Project</span>
                               </a>
                          </li>
+
                     </ul>
                </li>
                <li class="nav-item">
