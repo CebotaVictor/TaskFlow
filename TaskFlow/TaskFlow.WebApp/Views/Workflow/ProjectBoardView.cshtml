@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model TaskFlow.Domain.Entities.Projects.Project;
+
+@{
+     ViewData["Title"] = "View";
+     Layout = "_Layout";
+}
+
+
+<style>
+     body {
+          background-color: #1e1e2f;
+          color: white;
+     }
+
+     .board-column {
+          background-color: #2b2b3c;
+          border-radius: 10px;
+          padding: 15px;
+          margin: 10px;
+          min-height: 500px;
+     }
+
+     .task-card {
+          background-color: #3c3c4e;
+          border: none;
+          border-radius: 8px;
+          margin-bottom: 10px;
+          color: white;
+     }
+
+          .task-card h6 {
+               font-size: 16px;    
+          }
+
+     .add-task {
+          background: none;
+          color: #bbb;
+          border: 1px dashed #777;
+          border-radius: 8px;
+          padding: 6px;
+          cursor: pointer;
+     }
+</style>
+@section Menu{
+     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+          <div class="container-fluid py-4">
+               <h2 class="text-white mb-4">Project Board</h2>
+               <div class="row flex-nowrap overflow-auto">
+
+                    <!-- To Do -->
+                    <div class="col-md-3 board-column">
+                         <h5 class="mb-3">To Do</h5>
+                         <div class="card task-card p-3">
+                              <h6>Design homepage</h6>
+                              <span class="text-xs">Due: June 10</span>
+                         </div>
+                         <div class="card task-card p-3">
+                              <h6>Setup database</h6>
+                              <span class="text-xs">Due: June 12</span>
+                         </div>
+                         <button class="add-task w-100 mt-2">+ Add Task</button>
+                    </div>
+
+                    <!-- In Progress -->
+                    <div class="col-md-3 board-column">
+                         <h5 class="mb-3">In Progress</h5>
+                         <div class="card task-card p-3">
+                              <h6>API Integration</h6>
+                              <span class="text-xs">Assigned to: Alex</span>
+                         </div>
+                         <button class="add-task w-100 mt-2">+ Add Task</button>
+                    </div>
+
+                    <!-- Review -->
+                    <div class="col-md-3 board-column">
+                         <h5 class="mb-3">Review</h5>
+                         <div class="card task-card p-3">
+                              <h6>UI Review</h6>
+                              <span class="text-xs">Waiting on PM</span>
+                         </div>
+                         <button class="add-task w-100 mt-2">+ Add Task</button>
+                    </div>
+
+                    <!-- Done -->
+                    <div class="col-md-3 board-column">
+                         <h5 class="mb-3">Done</h5>
+                         <div class="card task-card p-3">
+                              <h6>Initial Wireframes</h6>
+                              <span class="text-xs">Completed May 28</span>
+                         </div>
+                         <button class="add-task w-100 mt-2">+ Add Task</button>
+                    </div>
+
+               </div>
+          </div>
+     </main>
+
+        
+}

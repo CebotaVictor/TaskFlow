@@ -25,7 +25,7 @@
 
 <body>
 
-     @await Html.PartialAsync("_Aside", true) 
+     @await Html.PartialAsync("_Aside", (IEnumerable<TaskFlow.Domain.Entities.Projects.Project>)ViewBag.Projects)
      @await RenderSectionAsync("Menu", true)
 
      <div class="container">

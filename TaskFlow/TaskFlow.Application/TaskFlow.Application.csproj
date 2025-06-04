@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="WorkFlow\Section\**" />
+    <Compile Remove="WorkFlow\UserTask\Mapping\**" />
+    <EmbeddedResource Remove="WorkFlow\Section\**" />
+    <EmbeddedResource Remove="WorkFlow\UserTask\Mapping\**" />
+    <None Remove="WorkFlow\Section\**" />
+    <None Remove="WorkFlow\UserTask\Mapping\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Users\Admin\" />
-    <Folder Include="WorkFlow\Section\Command\" />
-    <Folder Include="WorkFlow\Section\Handler\" />
-    <Folder Include="WorkFlow\UserTask\Mapping\" />
   </ItemGroup>
 
   <ItemGroup>
