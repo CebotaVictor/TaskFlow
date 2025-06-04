@@ -6,6 +6,7 @@ namespace TaskFlow.WebApi.Extensions
     {
         public static IEndpointRouteBuilder AddRouteConfig(this IEndpointRouteBuilder endpoint)
         {
+
             endpoint.MapControllerRoute(
                 name: "Billing",
                 pattern: "{controller=Home}/{action=Biling}")
@@ -32,9 +33,25 @@ namespace TaskFlow.WebApi.Extensions
                 .WithStaticAssets();
 
             endpoint.MapControllerRoute(
-            name: "Register",
-            pattern: "{controller=Auth}/{action=Login}")
-            .WithStaticAssets();
+                name: "Register",
+                pattern: "{controller=Auth}/{action=Login}")
+                .WithStaticAssets();
+
+            endpoint.MapControllerRoute(
+                name: "ProjectView",
+                pattern: "{controller=Workflow}/{action=ProjectBoardView}")
+                .WithStaticAssets();
+
+
+            endpoint.MapControllerRoute(
+                name: "ProjectView",
+                pattern: "{controller=Workflow}/{action=ProjectListView}")
+                .WithStaticAssets();
+
+            endpoint.MapControllerRoute(
+                name: "ProjectView",
+                pattern: "{controller=Workflow}/{action=ViewPage}")
+                .WithStaticAssets();
 
             return endpoint;
         }
