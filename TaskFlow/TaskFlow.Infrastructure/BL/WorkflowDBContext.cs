@@ -20,7 +20,7 @@ namespace TaskFlow.Infrastructure.BL
         {
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.Sections)
-                .WithOne(s => s.Project)
+                .WithOne()
                 .HasForeignKey(s => s.ProjectId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);

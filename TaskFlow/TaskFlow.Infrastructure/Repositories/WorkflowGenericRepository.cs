@@ -39,7 +39,7 @@ namespace TaskFlow.Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> DeletByIdGenericAsync(ushort Id)
+        public async Task<bool> DeleteByIdGenericAsync(ushort Id)
         {
             try
             {

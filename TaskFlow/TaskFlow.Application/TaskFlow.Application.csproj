@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Users\Admin\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.4" />
@@ -28,6 +24,10 @@
   <ItemGroup>
     <ProjectReference Include="..\TaskFlow.Domain\TaskFlow.Domain.csproj" />
     <ProjectReference Include="..\TaskFlow.Helpers\TaskFlow.Helpers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Users\Admin\" />
   </ItemGroup>
 
 </Project>

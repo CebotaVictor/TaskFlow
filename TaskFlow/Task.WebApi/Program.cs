@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 using TaskFlow.Application.Autentication.Handlers;
 using TaskFlow.Application.Interfaces.Authentication;
 using TaskFlow.Application.Interfaces.Repository;

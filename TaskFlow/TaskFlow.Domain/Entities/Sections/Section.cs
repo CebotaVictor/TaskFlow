@@ -26,6 +26,5 @@ namespace TaskFlow.Domain.Entities.Labels
         public ushort? ProjectId { get; set; }
 
         public ICollection<UTask> Tasks { get;} = new List<UTask>();
-        public Project ?Project { get; set; } = null!;
     }
 }

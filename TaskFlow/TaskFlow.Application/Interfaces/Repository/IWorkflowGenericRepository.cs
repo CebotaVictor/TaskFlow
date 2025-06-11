@@ -10,7 +10,7 @@ namespace TaskFlow.Application.Interfaces.Repository
         where TEntity : class
     {
         public Task AddGeneric(TEntity user);
-        public Task<bool> DeletByIdGenericAsync(ushort Id);
+        public Task<bool> DeleteByIdGenericAsync(ushort Id);
         public Task<TEntity> GetEntityById(ushort Id);
         public Task<IEnumerable<TEntity>> GetAllEntities();
     }

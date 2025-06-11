@@ -19,12 +19,49 @@
           color: white;
      }
 
+     /* Make the board-column relative for absolute positioning of the plus sign */
+     .board-column {
+          position: relative;
+     }
+
+          /* Style and position the plus sign */
+          .board-column .add-column-plus {
+               position: absolute;
+               top: 5px; /* Adjust as needed */
+               right: 5px; /* Adjust as needed */
+               font-size: 1.5rem; /* Make it visible */
+               color: #f8f9fa; /* Light color for visibility on dark background */
+               opacity: 0; 
+               transition: opacity 0.3s ease-in-out; /* Smooth transition */
+               cursor: pointer;
+               padding: 5px;
+               background-color: #2b2b3c
+          }
+
+          /* Show the plus sign on hover over the column */
+          .board-column:hover .add-column-plus {
+               opacity: 1;
+          }
+
+     .plus-column {
+          position: relative;
+          bottom: 20%;
+          background-color: #2b2b3c;
+          border-radius: 10px;
+          padding: 15px;
+          margin: 10px;
+          min-height: 10px;
+          max-height: 20px;
+     }
+
      .board-column {
           background-color: #2b2b3c;
           border-radius: 10px;
           padding: 15px;
           margin: 10px;
           min-height: 500px;
+          max-height: 500px;
+          overflow-y: auto;
      }
 
      .task-card {
@@ -47,60 +84,71 @@
           padding: 6px;
           cursor: pointer;
      }
+
+     #basic-button{
+          opacity: 0.4;
+     }
+
 </style>
+
+
+<script>
+      document.addEventListener('DOMContentLoaded', () => {
+       const plusBtn = document.querySelector('#basic-button');
+       const container = document.querySelector('.row.flex-nowrap.overflow-auto');
+
+       // Add new column when clicking the main plus button
+       plusBtn.addEventListener('click', () => {
+         const newColumn = document.createElement('div');
+         newColumn.className = 'col-md-3 board-column';
+         newColumn.innerHTML = `
+           <h5 class="mb-3 text-white">
+             To Do <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus add-column-plus" id="basic" viewBox="0 0 16 16">
+               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+             </svg>
+           </h5>
+         `;
+
+         container.insertBefore(newColumn, plusBtn);
+       });
+
+       // Listen for clicks on dynamically added ".add-column-plus" buttons (event delegation)
+       document.addEventListener('click', (event) => {
+         if (event.target.classList.contains('add-column-plus')) {
+           const column = event.target.closest('.col-md-3.board-column');
+
+           const newTask = document.createElement('div');
+           newTask.className = 'card task-card p-3';
+           newTask.innerHTML = `
+             <h6>New Task</h6>
+             <span class="text-xs">Due: --</span>
+           `;
+
+           column.appendChild(newTask); // Append task to correct column
+         }
+       });
+     });
+
+     function showProjectModal() {
+       const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
+       modal.show();
+     }
+</script>
+
 @section Menu{
      <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
           <div class="container-fluid py-4">
                <h2 class="text-white mb-4">Project Board</h2>
-               <div class="row flex-nowrap overflow-auto">
+               <div class="row flex-nowrap overflow-auto align-items-start">
+                    <div class="col-md-3 board-column d-flex align-items-center justify-content-center" id="basic-button" onclick="showProjectModal()">
 
-                    <!-- To Do -->
-                    <div class="col-md-3 board-column">
-                         <h5 class="mb-3">To Do</h5>
-                         <div class="card task-card p-3">
-                              <h6>Design homepage</h6>
-                              <span class="text-xs">Due: June 10</span>
-                         </div>
-                         <div class="card task-card p-3">
-                              <h6>Setup database</h6>
-                              <span class="text-xs">Due: June 12</span>
-                         </div>
-                         <button class="add-task w-100 mt-2">+ Add Task</button>
+                         <button class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center"
+                                 style="width: 60px; height: 60px; font-size: 2rem; border-width: 2px;">
+                              +
+                         </button>
+
                     </div>
-
-                    <!-- In Progress -->
-                    <div class="col-md-3 board-column">
-                         <h5 class="mb-3">In Progress</h5>
-                         <div class="card task-card p-3">
-                              <h6>API Integration</h6>
-                              <span class="text-xs">Assigned to: Alex</span>
-                         </div>
-                         <button class="add-task w-100 mt-2">+ Add Task</button>
-                    </div>
-
-                    <!-- Review -->
-                    <div class="col-md-3 board-column">
-                         <h5 class="mb-3">Review</h5>
-                         <div class="card task-card p-3">
-                              <h6>UI Review</h6>
-                              <span class="text-xs">Waiting on PM</span>
-                         </div>
-                         <button class="add-task w-100 mt-2">+ Add Task</button>
-                    </div>
-
-                    <!-- Done -->
-                    <div class="col-md-3 board-column">
-                         <h5 class="mb-3">Done</h5>
-                         <div class="card task-card p-3">
-                              <h6>Initial Wireframes</h6>
-                              <span class="text-xs">Completed May 28</span>
-                         </div>
-                         <button class="add-task w-100 mt-2">+ Add Task</button>
-                    </div>
-
                </div>
           </div>
      </main>
-
-        
 }

@@ -31,3 +31,4 @@ namespace TaskFlow.Domain.Entities.Projects
         public ICollection<Section> Sections { get; } =     new List<Section>();
     }
 }
+    

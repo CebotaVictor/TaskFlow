@@ -38,18 +38,18 @@ namespace TaskFlow.WebApi.Extensions
                 .WithStaticAssets();
 
             endpoint.MapControllerRoute(
-                name: "ProjectView",
+                name: "ProjectBoardView",
                 pattern: "{controller=Workflow}/{action=ProjectBoardView}")
                 .WithStaticAssets();
 
 
             endpoint.MapControllerRoute(
-                name: "ProjectView",
+                name: "ProjectListView",
                 pattern: "{controller=Workflow}/{action=ProjectListView}")
                 .WithStaticAssets();
 
             endpoint.MapControllerRoute(
-                name: "ProjectView",
+                name: "ViewPage",
                 pattern: "{controller=Workflow}/{action=ViewPage}")
                 .WithStaticAssets();
 

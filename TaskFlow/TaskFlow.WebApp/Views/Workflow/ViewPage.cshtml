@@ -1,59 +1,67 @@
 ﻿@model IEnumerable<TaskFlow.Domain.Entities.Projects.Project>
 
 @{
-    ViewData["Title"] = "View";
+     ViewData["Title"] = "View";
+     Layout = "_Layout";
+     var firstItem = Model.FirstOrDefault(); // to safely reference property names
 }
 
-<h1>View</h1>
+@section Menu {
+     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+          <h1>View</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+          <p>
+               <a asp-action="Create">Create New</a>
+          </p>
+
+          <table class="table">
+               <thead>
+                    <tr>
+                         <th>
+                              @Html.DisplayNameFor(_ => firstItem!.Name)
+                         </th>
+                         <th>
+                              @Html.DisplayNameFor(_ => firstItem!.Description)
+                         </th>
+                         <th>
+                              @Html.DisplayNameFor(_ => firstItem!.UserId)
+                         </th>
+                         <th>
+                              @Html.DisplayNameFor(_ => firstItem!.CreatedAt)
+                         </th>
+                         <th>
+                              @Html.DisplayNameFor(_ => firstItem!.EndDate)
+                         </th>
+                         <th></th>
+                    </tr>
+               </thead>
+               <tbody>
+                    @foreach (var item in Model)
+                    {
+                         <tr>
+                              <td>
+                                   @Html.DisplayFor(modelItem => item.Name)
+                              </td>
+                              <td>
+                                   @Html.DisplayFor(modelItem => item.Description)
+                              </td>
+                              <td>
+                                   @Html.DisplayFor(modelItem => item.UserId)
+                              </td>
+                              <td>
+                                   @Html.DisplayFor(modelItem => item.CreatedAt)
+                              </td>
+                              <td>
+                                   @Html.DisplayFor(modelItem => item.EndDate)
+                              </td>
+                              <td>
+                                   <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                   <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                   <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                              </td>
+                         </tr>
+                    }
+               </tbody>
+          </table>
+     </main>
 }
-    </tbody>
-</table>

@@ -13,6 +13,8 @@ using TaskFlow.Infrastructure.BL;
 using TaskFlow.Infrastructure.Repositories;
 using TaskFlow.Infrastructure.UnitOfWork;
 using TaskFlow.WebApi.Extensions;
+using TaskFlow.WebApp.API.Interfaces;
+using TaskFlow.WebApp.API.Services;
 namespace TaskFlow1
 {                                                   
     public class Program
@@ -33,6 +35,9 @@ namespace TaskFlow1
             builder.Services.AddDbContext<UsersDBContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddDbContext<WorkflowDBContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddAutoMapper(typeof(Program));
                 
             builder.Services.AddResponseCompression(options =>
@@ -51,6 +56,11 @@ namespace TaskFlow1
             //{
             //    options.Level = CompressionLevel.SmallestSize;
             //});
+
+            builder.Services.AddHttpClient<IProject, ProjectAPIService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7006/api/Workflow/");
+            });
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.

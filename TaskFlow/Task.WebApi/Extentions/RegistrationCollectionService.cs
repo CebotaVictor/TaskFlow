@@ -43,6 +43,9 @@ namespace TaskFlow.WebApi.Extentions
             service.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             service.AddScoped<UsersGenericRepository<Member>>();
             service.AddScoped<UsersGenericRepository<Admin>>();
+            service.AddScoped<WorkflowGenericRepository<Project>>();
+            service.AddScoped<WorkflowGenericRepository<Section>>();
+            service.AddScoped<WorkflowGenericRepository<UTask>>();
             service.AddScoped<IPassword, PasswordHandingService>();
             service.AddScoped<IUsersGenericRepository<Member>, UsersGenericRepository<Member>>();
             service.AddScoped<IUsersGenericRepository<Admin>, UsersGenericRepository<Admin>>();
@@ -52,6 +55,7 @@ namespace TaskFlow.WebApi.Extentions
             service.AddScoped<IMemberRepository, MemberRepository>();
             service.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
             service.AddScoped<IWorkflowUnitOfWork, WorkflowUnitOfWork>();
+            service.AddScoped<IProjectRepository, ProjectRepository>();
             service.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             builderConfiguration.AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
