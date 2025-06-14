@@ -49,6 +49,19 @@ namespace Task.WebApi
             builder.Services.AddMediator(builder.Configuration, builder.Configuration);
             builder.Services.AddJwtBearer(builder.Configuration);
 
+
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5176")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -68,6 +81,8 @@ namespace Task.WebApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowFrontend");
 
             app.MapControllers();
             app.UseResponseCompression();

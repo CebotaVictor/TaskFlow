@@ -62,6 +62,18 @@ namespace TaskFlow1
                 client.BaseAddress = new Uri("https://localhost:7006/api/Workflow/");
             });
 
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("https://localhost:7129", "http://localhost:5228")
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader();
+                                  });
+            });
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -77,7 +89,8 @@ namespace TaskFlow1
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
+            app.UseCors("AllowFrontend");
 
             app.UseResponseCompression(); 
             app.UseRouting(); 
@@ -91,5 +104,5 @@ namespace TaskFlow1
             app.AddRouteConfig(); 
             app.Run();
         }
-        }
     }
+}

@@ -26,12 +26,6 @@ namespace TaskFlow.Infrastructure.Repositories
             _logger = logger;
         }
 
-        public Project AddSectionToProject(Project CurrentProject, Section section)
-        {
-            CurrentProject.Sections.Add(section);
-            return CurrentProject;
-        }
-
         public Task<Project> UpdateProjectSectionsAsync()
         {
             throw new NotImplementedException();
@@ -51,5 +45,21 @@ namespace TaskFlow.Infrastructure.Repositories
                 return Enumerable.Empty<Project>();
             }
         }
+
+        public async Task<Project> GetProjectByIdAsync(ushort Id)
+        {
+            try
+            {
+                if (_context != null)
+                    return await _context.Include(p => p.Sections).ThenInclude(p=>p.Tasks).FirstOrDefaultAsync(p=>p.Id == Id) ?? throw new NullReferenceException($"GetEntityById query returned null for the GetAllEntitiesById");
+                throw new NullReferenceException("GetEntityById got a null _dbSet for the GetAllEntitiesById");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while deleting pacient {Id} {ex.Message}");
+                return null!;
+            }
+        }
+
     }
 }

@@ -24,24 +24,36 @@
           position: relative;
      }
 
-          /* Style and position the plus sign */
-          .board-column .add-column-plus {
-               position: absolute;
-               top: 5px; /* Adjust as needed */
-               right: 5px; /* Adjust as needed */
-               font-size: 1.5rem; /* Make it visible */
-               color: #f8f9fa; /* Light color for visibility on dark background */
-               opacity: 0; 
-               transition: opacity 0.3s ease-in-out; /* Smooth transition */
-               cursor: pointer;
-               padding: 5px;
-               background-color: #2b2b3c
-          }
+     /* Style and position the plus sign */
+     .board-column .add-column-plus {
+               
+          font-size: 1.5rem; 
+          color: #f8f9fa; 
+          opacity: 0; 
+          transition: opacity 0.3s ease-in-out;
+          cursor: pointer;
+          padding: 5px;
+          background-color: #2b2b3c
+     }
 
-          /* Show the plus sign on hover over the column */
-          .board-column:hover .add-column-plus {
-               opacity: 1;
-          }
+     .board-column:hover .add-column-plus,
+     .board-column:hover .three-dots {
+          opacity: 1;
+     }
+
+     .board-column .three-dots {
+          font-size: 1.5rem; /* Make it visible */
+          color: #f8f9fa; /* Light color for visibility on dark background */
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out; /* Smooth transition */
+          cursor: pointer;
+          padding: 5px;
+          background-color: #2b2b3c
+     }
+
+     .btn.dropdown-toggle::after {
+          display: none;
+     }
 
      .plus-column {
           position: relative;
@@ -102,11 +114,31 @@
          const newColumn = document.createElement('div');
          newColumn.className = 'col-md-3 board-column';
          newColumn.innerHTML = `
-           <h5 class="mb-3 text-white">
-             To Do <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus add-column-plus" id="basic" viewBox="0 0 16 16">
-               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-             </svg>
-           </h5>
+           <h5 class="mb-3 text-white d-flex justify-content-between align-items-center">
+               <span>To Do</span>
+               <span class="d-flex gap-3">
+               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                    class="bi bi-plus add-column-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+               </svg>
+
+                <div class="btn-group">
+                 <button type="button" class="btn p-0 m-0 bg-transparent border-0 dropdown-toggle"
+                         data-bs-toggle="dropdown" aria-expanded="false">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                        class="bi bi-three-dots three-dots" viewBox="0 0 16 16">
+                     <path d="M3 9.5a1.5 1.5 0 1 1 0-3
+                              1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
+                              1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
+                              1.5 1.5 0 0 1 0 3"/>
+                   </svg>
+                 </button>
+                 <ul class="dropdown-menu dropdown-menu-end">
+                   <li><a class="dropdown-item" href="#">Delete Section</a></li>
+                 </ul>
+               </div>
+               </span>
+          </h5>
          `;
 
          container.insertBefore(newColumn, plusBtn);
@@ -124,7 +156,7 @@
              <span class="text-xs">Due: --</span>
            `;
 
-           column.appendChild(newTask); // Append task to correct column
+          column.appendChild(newTask); 
          }
        });
      });
@@ -133,6 +165,74 @@
        const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
        modal.show();
      }
+
+          function renderSections(sections) {
+         const container = document.querySelector('.row.flex-nowrap.overflow-auto');
+
+         container.querySelectorAll('.board-column:not(#basic-button)').forEach(column => column.remove());
+
+
+         sections.forEach(section => {
+             const sectionElement = document.createElement('div');
+             sectionElement.className = 'col-md-3 board-column';
+             sectionElement.innerHTML = `
+               <h5 class="mb-3 text-white d-flex justify-content-between align-items-center">
+                 <span>${section.name}</span>
+                  <span class="d-flex gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                         class="bi bi-plus add-column-plus" viewBox="0 0 16 16">
+                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+
+                     <div class="btn-group">
+                      <button type="button" class="btn p-0 m-0 bg-transparent border-0 dropdown-toggle"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                             class="bi bi-three-dots three-dots" viewBox="0 0 16 16">
+                          <path d="M3 9.5a1.5 1.5 0 1 1 0-3
+                                   1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
+                                   1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
+                                   1.5 1.5 0 0 1 0 3"/>
+                        </svg>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Delete Section</a></li>
+                      </ul>
+               </div>
+               </span>
+               </h5>
+               `;
+
+             // Append tasks inside this column
+             section.tasks?.forEach(task => {
+                 const taskCard = document.createElement('div');
+                 taskCard.className = 'card task-card p-3 mb-2';
+                 taskCard.innerHTML = `
+                     <h6>${task.name}</h6>
+                     <span class="text-xs">Due: ${task.dueDate || '--'}</span>
+                 `;
+                 sectionElement.appendChild(taskCard);
+             });
+
+             // Insert the column before the plus button
+             const plusBtn = document.getElementById('basic-button');
+             container.insertBefore(sectionElement, plusBtn);
+         });
+     }
+
+
+     async function fetchSectionsAndTasks() {
+         const response = await fetch('https://localhost:7006/api/Workflow/GetAllSections');
+         if (response.ok) {
+             const sections = await response.json();
+             renderSections(sections); 
+         } else {
+             console.error("Failed to fetch sections & tasks");
+         }
+         console.log(response);
+     }
+
+     document.addEventListener('DOMContentLoaded', fetchSectionsAndTasks);
 </script>
 
 @section Menu{
@@ -146,9 +246,10 @@
                                  style="width: 60px; height: 60px; font-size: 2rem; border-width: 2px;">
                               +
                          </button>
-
                     </div>
                </div>
           </div>
      </main>
+
+
 }

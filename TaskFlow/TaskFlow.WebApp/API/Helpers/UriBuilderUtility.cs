@@ -8,8 +8,6 @@ namespace UtmHttp.Utility
 {
     public static class UriBuilderUtility
     {
-        private static Uri builder;
-
         public static Uri BuildUri(string postfix)
         {
             return new Uri("https://localhost:7129" + "/api/" + postfix);
