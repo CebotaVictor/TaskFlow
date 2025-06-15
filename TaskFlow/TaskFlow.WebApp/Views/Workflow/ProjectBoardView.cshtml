@@ -105,6 +105,9 @@
 
 
 <script>
+
+     document.addEventListener('DOMContentLoaded', fetchSectionsAndTasks);
+
       document.addEventListener('DOMContentLoaded', () => {
        const plusBtn = document.querySelector('#basic-button');
        const container = document.querySelector('.row.flex-nowrap.overflow-auto');
@@ -175,6 +178,9 @@
          sections.forEach(section => {
              const sectionElement = document.createElement('div');
              sectionElement.className = 'col-md-3 board-column';
+
+             sectionElement.dataset.sectionId = section.id;
+
              sectionElement.innerHTML = `
                <h5 class="mb-3 text-white d-flex justify-content-between align-items-center">
                  <span>${section.name}</span>
@@ -196,7 +202,7 @@
                         </svg>
                       </button>
                       <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Delete Section</a></li>
+                        <li><a class="dropdown-item delete-section-btn" >Delete Section</a></li>
                       </ul>
                </div>
                </span>
@@ -232,7 +238,60 @@
          console.log(response);
      }
 
-     document.addEventListener('DOMContentLoaded', fetchSectionsAndTasks);
+     async function CreateSection(){
+
+     }
+
+      async function DeleteSectionAsync(sectionId) {
+         const confirmed = confirm("Are you sure you want to delete this section?");
+         if (!confirmed) return;
+
+         const response = await fetch(`https://localhost:7006/api/Workflow/DeleteSection?Id=${sectionId}`, {
+             method: 'DELETE'
+         });
+
+         if (response.ok) {
+             await fetchSectionsAndTasks(); // Refresh after delete
+         } else {
+             alert('Failed to delete section.');
+         }
+     }
+
+     document.addEventListener('click', function(event){
+          const deleteBtn = event.target.closest('.delete-section-btn');
+          if(deleteBtn){
+               const column = deleteBtn.closest('.board-column');
+               const sectionId = column?.dataset.sectionId;
+               if (sectionId) {
+                    DeleteSectionAsync(sectionId);
+               }
+          }
+     });
+
+
+       document.addEventListener('DOMContentLoaded', () => {
+         const form = document.getElementById('create-section-form');
+         form.addEventListener('submit', function (e) {
+             e.preventDefault(); // Stop actual form submission
+
+             const sectionName = document.getElementById('SectionName').value.trim();
+             if (!sectionName) return;
+
+             const section = {
+                 id: 0, 
+                 name: sectionName,
+                 tasks: []
+             };
+
+             renderSections([section]); 
+
+             // Reset form and close modal
+             form.reset();
+             bootstrap.Modal.getInstance(document.getElementById('newProjectModal')).hide();
+         });
+     });
+
+
 </script>
 
 @section Menu{
@@ -246,10 +305,27 @@
                                  style="width: 60px; height: 60px; font-size: 2rem; border-width: 2px;">
                               +
                          </button>
+
                     </div>
                </div>
           </div>
      </main>
-
-
 }
+
+<div class="modal fade" id="newProjectModal" tabindex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-dark text-white">
+               <div class="modal-header border-0">
+                    <h5 class="modal-title text-white" id="newProjectModalLabel">New project</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                    <form id="create-section-form">
+                         <label for="SectionName">Section Name:</label>
+                         <input type="text" id="SectionName" name="SectionName" value="" required />
+                         <input type="submit" value="Submit" class="submit" />
+                    </form>
+               </div>
+          </div>
+     </div>
+</div>

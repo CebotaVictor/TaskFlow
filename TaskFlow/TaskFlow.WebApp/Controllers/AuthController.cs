@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
+using TaskFlow.Application.Contracts.Authentication;
 using TaskFlow.Application.Users.Members.Handlers;
 using TaskFlow.Domain.Entities.Users;
 
@@ -28,6 +29,10 @@ namespace TaskFlow.WebApi.Controllers
         {
             return View();
         }
+
+
+       
+
 
         [HttpGet]
         public ActionResult Login()

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using TaskFlow.Domain.Enums;
 
 namespace TaskFlow.Domain.Entities.Users
 {
@@ -30,7 +31,10 @@ namespace TaskFlow.Domain.Entities.Users
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [Column(Order = 4)]
-        public DateTime DataAdded { get; set; }  
+        [Column(Order = 5)]
+        public DateTime DataAdded { get; set; }
+
+        [Column("UserRole", Order = 4, TypeName = "smallint")]
+        public Roles Role { get; set; }
     }
 }

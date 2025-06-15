@@ -12,8 +12,10 @@ namespace TaskFlow.Domain.Entities.Users
 
     public sealed class Member : User
     {
-        [Column("MembersRole", Order = 5, TypeName = "smallint")]
-        public Roles Role { get; set; } = Roles.employee;
+        public Member()
+        {
+            Role = Roles.Member;
+        }
     }
 }
     

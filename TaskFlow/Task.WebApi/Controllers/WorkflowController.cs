@@ -51,7 +51,7 @@ namespace TaskFlow.WebApi.Controllers
             }
             try
             {
-                var result = await _mediator.Send(request);
+                var result = await _mediator.Send(request, token);
                 if(result == null) return BadRequest(result);
                 return Ok(result);
             }
@@ -60,6 +60,26 @@ namespace TaskFlow.WebApi.Controllers
                 return BadRequest($"Failed to create project {ex.Message}");
             }
         }
+
+        [HttpDelete("DeleteProject")]
+        public async Task<IActionResult> DeleteProject(ushort Id, CancellationToken token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _mediator.Send(new DeleteProjectCommand {Id = Id}, token);
+                if (result == null) return BadRequest(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to delete project {ex.Message}");
+            }
+        }
+
 
 
         [HttpGet("GetAllSections")]
@@ -87,13 +107,32 @@ namespace TaskFlow.WebApi.Controllers
             }
             try
             {
-                var result = await _mediator.Send(request);
+                var result = await _mediator.Send(request, token);
                 if (result == null) return BadRequest(result);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 return BadRequest($"Failed to create project {ex.Message}");
+            }
+        }
+
+        [HttpDelete("DeleteSection")]
+        public async Task<IActionResult> DeleteSection(ushort Id, CancellationToken token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _mediator.Send(new DeleteSectionCommand { Id = Id }, token);
+                if (result == null) return BadRequest(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to delete section {ex.Message}");
             }
         }
     }

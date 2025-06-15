@@ -9,6 +9,7 @@ namespace TaskFlow.Domain.Enums
     public enum Roles:ushort
     {
         Admin = 0,
-        employee = 1
+        Member = 1,
+        User = 2
     }
 }

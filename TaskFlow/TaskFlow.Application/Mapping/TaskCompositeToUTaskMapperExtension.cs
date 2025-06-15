@@ -24,7 +24,7 @@ namespace TaskFlow.Application.Mapping
                 ProjectId = Task.ProjectId
             };
 
-            foreach(var subTask in Task.Tasks)
+            foreach(var subTask in Task.Tasks!)
             {
                 if(subTask is LeafTask subLeaf)
                 {

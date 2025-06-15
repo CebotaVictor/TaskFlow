@@ -11,7 +11,9 @@ namespace TaskFlow.Domain.Entities.Users
 {
     public sealed class Admin : User
     {
-        [Column("AdminRole", Order = 5, TypeName = "ushort")]
-        public Roles Role { get; set; } = Roles.Admin;
+        public Admin()
+        {
+            Role = Roles.Admin;
+        }
     }
 }

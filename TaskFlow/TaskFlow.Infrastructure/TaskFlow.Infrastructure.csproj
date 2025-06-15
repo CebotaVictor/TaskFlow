@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\Workflow\**" />
+    <EmbeddedResource Remove="Migrations\Workflow\**" />
+    <None Remove="Migrations\Workflow\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
@@ -18,10 +24,6 @@
     <ProjectReference Include="..\TaskFlow.Application\TaskFlow.Application.csproj" />
     <ProjectReference Include="..\TaskFlow.Domain\TaskFlow.Domain.csproj" />
     <ProjectReference Include="..\TaskFlow.Helpers\TaskFlow.Helpers.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\Workflow\" />
   </ItemGroup>
 	
 </Project>

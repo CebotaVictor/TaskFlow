@@ -11,15 +11,15 @@ using TaskFlow.Application.Users.Members.Commands;
 using TaskFlow.Application.Users.Responses;
 using TaskFlow.Domain.Entities.Users;
 
-namespace TaskFlow.Application.Users.Members.Handlers
+namespace TaskFlow.Application.Users.Admins.Handlers
 {
-    public class DeleteMemeberHandler : IRequestHandler<DeleteMemberCommand, UserResponse>
+    public class DeleteAdminHandler : IRequestHandler<DeleteMemberCommand, UserResponse>
     {
         private IUsersUnitOfWork _unitOfWork;
 
-        public DeleteMemeberHandler(IUsersUnitOfWork UnitOfWork)
+        public DeleteAdminHandler(IUsersUnitOfWork UnitOfWork)
         {
-            _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGeneriRepository is null in UpdateMemberHandler");
+            _unitOfWork = UnitOfWork ?? throw new NullReferenceException("IGenericRepository is null in DeleteAdminHandler");
         }
 
 
@@ -28,12 +28,12 @@ namespace TaskFlow.Application.Users.Members.Handlers
             if (request == null) { return new UserResponse(-1, "");}
             try
             {
-                await _unitOfWork.Users.DeletByIdGenericAsync(request.Id);
+                await _unitOfWork.Admins.DeletByIdGenericAsync(request.Id);
                 if (await _unitOfWork.SaveChangesAsync() > 0)
                 {
                     return new UserResponse(1, "Successfully deleted"); 
                 }
-                throw new Exception($"Error while deleting the member with id {request.Id}");
+                throw new Exception($"Error while deleting the Admin with id {request.Id}");
             }
             catch (Exception ex)
             { 

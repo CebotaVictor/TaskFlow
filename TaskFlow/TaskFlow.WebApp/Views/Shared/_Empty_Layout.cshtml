@@ -14,17 +14,37 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
      <!-- Main CSS -->
-     <link id="pagestyle" rel="stylesheet" href="@Url.Content("~/assets/css/material-dashboard.css?v=3.2.0")" />
-
+     <link id="pagestyle" rel="stylesheet" href="@Url.Content("~/assets/css/material-dashboard.css?v=3.2.0")" />     
 </head>
 
-<body>     
-          @await RenderSectionAsync("Section", true)
+<body>
+     @await RenderSectionAsync("Section", true)
 
-          @RenderBody()
-
-     <script src="@Url.Content("/js/bundle.js")"></script>
+     @RenderBody()
      <script src="@Url.Content("/js/core.js")"></script>
+     <script>
+          window.addEventListener('DOMContentLoaded', function () {
+              const inputs = document.querySelectorAll('.input-group input');
 
+              inputs.forEach(input => {
+                  if (input.value.trim() !== '') {
+                      input.parentElement.classList.add('is-filled');
+                  }
+
+                  input.addEventListener('input', function () {
+                      if (this.value.trim() !== '') {
+                          this.parentElement.classList.add('is-filled');
+                      } else {
+                          this.parentElement.classList.remove('is-filled');
+                      }
+                  });
+              });
+
+              // Optional: reinitialize if needed
+              if (window.md?.input?.init) {
+                  md.input.init();
+              }
+          });
+     </script>
 </body>
 </html>

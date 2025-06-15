@@ -11,12 +11,12 @@ using TaskFlow.Domain.Entities.Users;
 
 namespace TaskFlow.Application.Users.Members.Handlers
 {
-    public class GetMemberByIdHandler : IRequestHandler<GetMemberByIdQuery, Member>
+    public class GetAdminByIdHandler : IRequestHandler<GetMemberByIdQuery, Member>
     {
         public IUsersUnitOfWork ?_unitOfWork;
-        public ILogger<GetMemberByIdHandler> _logger;
+        public ILogger<GetAdminByIdHandler> _logger;
         
-        public GetMemberByIdHandler(IUsersUnitOfWork unitOfWork, ILogger<GetMemberByIdHandler> logger) 
+        public GetAdminByIdHandler(IUsersUnitOfWork unitOfWork, ILogger<GetAdminByIdHandler> logger) 
         {
             _unitOfWork = unitOfWork ?? throw new NullReferenceException("unit o work is null in GetMemberByIdHandler");
             _logger = logger ?? throw new NullReferenceException("unit o work is null in GetMemberByIdHandler");

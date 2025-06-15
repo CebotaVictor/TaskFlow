@@ -5,6 +5,8 @@ using TaskFlow.Application.Interfaces.Authentication;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.Service;
 using TaskFlow.Application.Interfaces.UnitOfWork;
+using TaskFlow.Application.Users.Admins.Commands;
+using TaskFlow.Application.Users.Admins.Queries;
 using TaskFlow.Application.Users.Members.Commands;
 using TaskFlow.Application.Users.Members.Queries;
 using TaskFlow.Application.WorkFlow.Projects.Command;
@@ -33,6 +35,12 @@ namespace TaskFlow.WebApi.Extentions
                 cfg.RegisterServicesFromAssemblyContaining<AddMemberCommand>();
                 cfg.RegisterServicesFromAssemblyContaining<GetMemberQuery>();
                 cfg.RegisterServicesFromAssemblyContaining<DeleteMemberCommand>();
+
+                cfg.RegisterServicesFromAssemblyContaining<UpdateAdminCommand>();
+                cfg.RegisterServicesFromAssemblyContaining<AddAdminCommand>();
+                cfg.RegisterServicesFromAssemblyContaining<GetAdminQuery>();
+                cfg.RegisterServicesFromAssemblyContaining<DeleteAdminCommand>();
+
                 cfg.RegisterServicesFromAssemblyContaining<RegisterCommandHandler>();
                 cfg.RegisterServicesFromAssemblyContaining<LoginCommandHandler>();
                 cfg.RegisterServicesFromAssemblyContaining<CreateProjectCommand>();
