@@ -14,12 +14,6 @@ namespace TaskFlow.WebApp.API.Services
         {
             _httpClient = httpclient;
         }
-
-        public Task<object> CreateProjectAsync(CreateProjectCommand request, CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<Project>> GetAllProjectsAsync(CancellationToken token)
         {
             try

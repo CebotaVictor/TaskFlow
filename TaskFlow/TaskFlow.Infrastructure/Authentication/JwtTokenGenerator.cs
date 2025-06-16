@@ -24,17 +24,17 @@ namespace TaskFlow.Infrastructure.Authentication
             _configuration = configuration;
             _jwtSettings = options.Value;
         }
-        public string GenerateToken(JwtUserDTO member)
+        public string GenerateToken(JwtUserDTO user)
         {
             string secretKey = _configuration!["Jwt:SecretKey"]!;
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)), SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, member.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, member.Email),
-                new Claim(ClaimTypes.Role, member.Role.ToString())
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var securityToken = new JwtSecurityToken

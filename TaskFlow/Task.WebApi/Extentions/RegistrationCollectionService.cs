@@ -61,6 +61,7 @@ namespace TaskFlow.WebApi.Extentions
             service.AddScoped<IWorkflowGenericRepository<Section>, WorkflowGenericRepository<Section>>();
             service.AddScoped<IWorkflowGenericRepository<UTask>, WorkflowGenericRepository<UTask>>();
             service.AddScoped<IMemberRepository, MemberRepository>();
+            service.AddScoped<IAdminRepository, AdminRepository>();
             service.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
             service.AddScoped<IWorkflowUnitOfWork, WorkflowUnitOfWork>();
             service.AddScoped<IProjectRepository, ProjectRepository>();

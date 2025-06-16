@@ -23,7 +23,8 @@
                                              <p class="mb-0">Enter your email and password to register</p>
                                         </div>
                                         <div class="card-body">
-                                             <form asp-action="Register" asp-controller="Account" method="post">
+                                             <form asp-action="Register" asp-controller="Auth" method="post">
+                                                  @Html.AntiForgeryToken()
                                                   <div class="input-group input-group-outline mb-3">
                                                        <label class="form-label">Username</label>
                                                        <input asp-for="Username"  type="text" class="form-control">
@@ -39,7 +40,7 @@
                                                   </div>
 
                                                   <div class="input-group input-group-outline mb-3">
-                                                       <label     class="form-label">Confirm Password</label>
+                                                       <label class="form-label">Confirm Password</label>
                                                        <input asp-for="ConfirmPassword" type="password" class="form-control">
                                                   </div>
 

@@ -6,8 +6,6 @@ namespace TaskFlow.WebApp.API.Interfaces
 {
     public interface IProject
     {
-        Task<object> CreateProjectAsync(CreateProjectCommand request, CancellationToken token);
-
         Task<IEnumerable<Project>> GetAllProjectsAsync(CancellationToken token);
     }
 }

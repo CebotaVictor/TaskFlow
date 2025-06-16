@@ -169,6 +169,11 @@
        modal.show();
      }
 
+     function showSectionModal() {
+       const modal = new bootstrap.Modal(document.getElementById('newSectionModal'));
+       modal.show();
+     }
+
           function renderSections(sections) {
          const container = document.querySelector('.row.flex-nowrap.overflow-auto');
 
@@ -287,19 +292,18 @@
 
              // Reset form and close modal
              form.reset();
-             bootstrap.Modal.getInstance(document.getElementById('newProjectModal')).hide();
+             bootstrap.Modal.getInstance(document.getElementById('newSectionModal')).hide();
          });
      });
 
 
 </script>
 
-@section Menu{
-     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+@section Menu{     
           <div class="container-fluid py-4">
                <h2 class="text-white mb-4">Project Board</h2>
                <div class="row flex-nowrap overflow-auto align-items-start">
-                    <div class="col-md-3 board-column d-flex align-items-center justify-content-center" id="basic-button" onclick="showProjectModal()">
+                    <div class="col-md-3 board-column d-flex align-items-center justify-content-center" id="basic-button" onclick="showSectionModal()">
 
                          <button class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center"
                                  style="width: 60px; height: 60px; font-size: 2rem; border-width: 2px;">
@@ -309,14 +313,13 @@
                     </div>
                </div>
           </div>
-     </main>
 }
 
-<div class="modal fade" id="newProjectModal" tabindex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+<div class="modal fade" id="newSectionModal" tabindex="-1" aria-labelledby="newSectionModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content bg-dark text-white">
                <div class="modal-header border-0">
-                    <h5 class="modal-title text-white" id="newProjectModalLabel">New project</h5>
+                    <h5 class="modal-title text-white" id="newSectionModal">New project</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">

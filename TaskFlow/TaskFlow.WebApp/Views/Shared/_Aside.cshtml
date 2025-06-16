@@ -6,6 +6,11 @@
 
 
 <script>
+
+      document.addEventListener("DOMContentLoaded", () => {
+         FetchProjectsAsync();
+     });
+
      function showProjectModal() {
        const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
        modal.show();
@@ -34,6 +39,62 @@
              menu.classList.remove('show');
          }
      });
+
+     function RenderProjectsAsync(projects) {
+         const projectDropdown = document.getElementById("projectDropdown");
+
+         // Clear all existing items
+         projectDropdown.innerHTML = ``;
+         // Append each project as a <li>
+         projects.forEach(project => {
+             const li = document.createElement("li");
+             li.innerHTML = `
+                 <a href="/Project/Details/${project.id}" class="nav-link text-dark ps-4">
+                     <i class="material-symbols-rounded opacity-5">folder</i>
+                     <span class="nav-link-text ms-2">${project.name}</span>
+                 </a>
+             `;
+             projectDropdown.appendChild(li);
+         });
+     }
+
+      async function FetchProjectsAsync() {
+         const response = await fetch('https://localhost:7006/api/Workflow/GetAllProjects');
+         if (response.ok) {
+             const projects = await response.json();
+             RenderProjectsAsync(projects);
+         } else {
+             console.error("Failed to fetch projects");
+         }
+         console.log(response);
+     }
+
+          // Handle project deletion
+     document.addEventListener("click", function(event) {
+         const deleteBtn = event.target.closest(".delete-project-btn");
+         if (deleteBtn) {
+             const projectId = deleteBtn.getAttribute("data-project-id");
+             if (projectId) {
+                 DeleteProjectAsync(projectId);
+             }
+         }
+     });
+
+      async function DeleteProjectsAsync(projectId) {
+         const confirmed = confirm("Are you sure you want to delete this project?");
+         if (!confirmed) return;
+
+         const response = await fetch(`https://localhost:7006/api/Workflow/DeleteProject?Id=${projectId}`, {
+             method: 'DELETE'
+         });
+
+         if (response.ok) {
+             await FetchProjectsAsync(); // Refresh after delete
+         } else {
+             alert('Failed to delete project.');
+         }
+     }
+
 </script>
 
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2" id="sidenav-main">

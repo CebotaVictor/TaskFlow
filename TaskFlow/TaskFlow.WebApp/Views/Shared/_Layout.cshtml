@@ -20,11 +20,17 @@
 </head>
 
 <body>
+     @await Html.PartialAsync("_Navbar")
      @await Html.PartialAsync("_Aside", (IEnumerable<TaskFlow.Domain.Entities.Projects.Project>)ViewBag.Projects)
-     @await RenderSectionAsync("Menu", true)
+     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
 
-     @RenderBody()
-     
+          @await RenderSectionAsync("Menu")
+
+          @RenderBody()
+     </main>
+
+     @await Html.PartialAsync("_NewPartialProjectView")
+
      <script async defer src="https://buttons.github.io/buttons.js"></script>
 
      <script src="@Url.Content("/js/core.js")"></script>

@@ -11,48 +11,31 @@
      <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content bg-dark text-white">
                <div class="modal-header border-0">
-                    <h5 class="modal-title text-white" id="newProjectModalLabel">New project</h5>
+                    <h5 class="modal-title text-white" id="newProjectModalLabel">New Project</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
                     <form method="post">
                          <fieldset>
-                              <legend>Add Customer</legend>
-                              <div>
-                                   <label for="CompanyName">Company Name:</label>
-                                   <input type="text" name="CompanyName" value="" />
-                                   @Html.ValidationMessage("companyname")
+                              <div class="row mb-3">
+                                   <label for="ProjectName" class="col-sm-3 col-form-label text-white">Project Name:</label>
+                                   <div class="col-sm-9">
+                                        <input type="text" class="form-control bg-secondary text-white border-light" id="ProjectName" name="ProjectName" />
+                                        @Html.ValidationMessage("ProjectName")
+                                   </div>
                               </div>
-                              <div>
-                                   <label for="ContactName">Contact Name:</label>
-                                   <input type="text" name="ContactName" value="" />
-                                   @Html.ValidationMessage("contactname")
+                              <div class="row mb-3">
+                                   <label for="ProjectDescription" class="col-sm-3 col-form-label text-white">Project Description:</label>
+                                   <div class="col-sm-9">
+                                        <input type="text" class="form-control bg-secondary text-white border-light" id="ProjectDescription" name="ProjectDescription" />
+                                        @Html.ValidationMessage("ProjectDescription")
+                                   </div>
                               </div>
-                              <div>
-                                   <label for="Employees">Employee Count:</label>
-                                   <input type="text" name="Employees" value="" />
-                                   @Html.ValidationMessage("employees")
-                              </div>
-                              <div>
-                                   <label>&nbsp;</label>
-                                   <input type="submit" value="Submit" class="submit" />
+                              <div class="text-end">
+                                   <button type="submit" class="btn btn-primary">Submit</button>
                               </div>
                          </fieldset>
                     </form>
-                    @{
-                         if (@Context.Request.Method == "POST")
-                         {
-                              var companyname = @Context.Request.Form["companyname"];
-                              var contactname = @Context.Request.Form["contactname"];
-                              var employeecount = @Context.Request.Form["employees"];
-                              <text>
-                                   You entered: <br />
-                                   Company Name: @companyname <br />
-                                   Contact Name: @contactname <br />
-                                   Employee Count: @employeecount <br />
-                              </text>
-                         }
-                    }
                </div>
           </div>
      </div>

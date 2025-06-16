@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using TaskFlow.Application.Contracts.Shared;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.UnitOfWork;
+using TaskFlow.Application.Users.Admins.Commands;
 using TaskFlow.Application.Users.Members.Commands;
 using TaskFlow.Application.Users.Responses;
 using TaskFlow.Domain.Entities.Users;
 
 namespace TaskFlow.Application.Users.Admins.Handlers
 {
-    public class DeleteAdminHandler : IRequestHandler<DeleteMemberCommand, UserResponse>
+    public class DeleteAdminHandler : IRequestHandler<DeleteAdminCommand, UserResponse>
     {
         private IUsersUnitOfWork _unitOfWork;
 
@@ -23,7 +24,7 @@ namespace TaskFlow.Application.Users.Admins.Handlers
         }
 
 
-        public async Task<UserResponse> Handle(DeleteMemberCommand request, CancellationToken token)
+        public async Task<UserResponse> Handle(DeleteAdminCommand request, CancellationToken token)
         {
             if (request == null) { return new UserResponse(-1, "");}
             try

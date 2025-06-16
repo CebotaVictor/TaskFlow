@@ -14,6 +14,7 @@ using TaskFlow.Application.Interfaces.Authentication;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.Service;
 using TaskFlow.Application.Interfaces.UnitOfWork;
+using TaskFlow.Application.Users.Admins.Commands;
 using TaskFlow.Application.Users.Members.Commands;
 using TaskFlow.Application.Users.Responses;
 using TaskFlow.Domain.Entities.Users;
@@ -37,7 +38,7 @@ namespace TaskFlow.Application.Autentication.Handlers
             {
                 if (await _unitOfWork!.Members.GetMemberByEmail(request.Email) is not null)
                 {
-                    throw new Exception("Dublicate email");
+                    throw new Exception("Duplicate email");
                 }
 
                 string Hash = _paswdHandling!.PasswordHashing(request.Password);

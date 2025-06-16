@@ -13,6 +13,7 @@ namespace TaskFlow.Application.Interfaces.UnitOfWork
         public IUsersGenericRepository<Member> Users { get; }
         public IUsersGenericRepository<Admin> Admins { get; }
         public IMemberRepository Members{ get; }
+        public IAdminRepository AdminRepo { get; }
 
 
         Task<int> SaveChangesAsync();

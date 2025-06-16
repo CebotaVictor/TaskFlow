@@ -1,18 +1,26 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Configuration;
 using System.IO.Compression;
 using System.Reflection;
+using System.Text;
+using TaskFlow.Application.Autentication.Handlers;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.UnitOfWork;
 using TaskFlow.Application.Users.Members.Commands;
 using TaskFlow.Application.Users.Members.Queries;
 using TaskFlow.Domain.Entities.Users;
+using TaskFlow.Infrastructure.Authentication;
 using TaskFlow.Infrastructure.BL;
 using TaskFlow.Infrastructure.Repositories;
 using TaskFlow.Infrastructure.UnitOfWork;
 using TaskFlow.WebApi.Extensions;
+using TaskFlow.WebApi.Extentions;
 using TaskFlow.WebApp.API.Interfaces;
 using TaskFlow.WebApp.API.Services;
 namespace TaskFlow1
@@ -60,6 +68,55 @@ namespace TaskFlow1
             builder.Services.AddHttpClient<IProject, ProjectAPIService>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7006/api/Workflow/");
+            });
+
+            builder.Services.AddHttpClient<IAuth, AuthAPIService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7006/api/ApiAuth/");
+                });
+
+            builder.Services.AddHttpClient<IUser, UserApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7006/api/");
+            });
+
+            builder.Services.AddScoped<CookieGenerator>();
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                JwtSettings settings = new JwtSettings();
+                builder.Configuration.GetSection("JwtSettings").Bind(settings);
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+
+                    ValidIssuer = settings.Issuer,
+                    ValidAudience = settings.Audience,
+                    ClockSkew = TimeSpan.Zero
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        if (context.Request.Cookies.ContainsKey("my_token"))
+                        {
+                            context.Token = context.Request.Cookies["my_token"];
+                        }
+                        return System.Threading.Tasks.Task.CompletedTask;
+                    }
+                };
             });
 
 

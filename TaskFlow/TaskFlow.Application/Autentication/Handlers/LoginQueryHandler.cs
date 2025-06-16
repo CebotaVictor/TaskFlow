@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,18 +23,29 @@ namespace TaskFlow.Application.Autentication.Handlers
         private readonly IMediator ?_mediator = mediator;
         private readonly IJwtTokenGenerator ?_jwtTokenGenerator = jwtTokenGenerator ?? throw new NullReferenceException("Token Generator is null");
         private readonly IPassword? _paswdHandling = paswdHandling;
+        private string ?token;
         public async Task<AutenticationResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 var member = await _unitOfWork!.Members.GetMemberByEmail(request.Email);
+                Admin admin = null!;
+                if (member == null) // the member is null, check if admin exists with the same email
+                {
+                    admin = await _unitOfWork!.AdminRepo.GetAdminByEmail(request.Email);
+                    if (admin == null) return new AutenticationResponse(null!, null!); // No member or admin found with this email
 
-                if (member == null) return null!;
+                    if (_paswdHandling!.VerifyPassword(admin!.Password, request.password) != true) return null!;
 
-                if(_paswdHandling!.VerifyPassword(member.Password, request.password) != true) return null!; 
+                    token = _jwtTokenGenerator!.GenerateToken(new JwtUserDTO(admin.Id, admin.Email, admin.Role));
 
-                string token = _jwtTokenGenerator!.GenerateToken(new JwtUserDTO ( member.Id, member.Email, member.Role));
+                    return new AutenticationResponse(request.Email, token);
+                }
+                
+                if(_paswdHandling!.VerifyPassword(member!.Password, request.password) != true) return null!; 
+
+                token = _jwtTokenGenerator!.GenerateToken(new JwtUserDTO ( member.Id, member.Email, member.Role));
 
                 return new AutenticationResponse ( request.Email, token);
             }
