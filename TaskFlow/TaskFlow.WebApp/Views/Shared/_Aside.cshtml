@@ -4,6 +4,15 @@
 @{
 }
 
+<style>
+
+     #projectDropdown {
+          display: block !important;
+          visibility: visible !important;
+     }
+     
+
+</style>
 
 <script>
 
@@ -15,6 +24,7 @@
        const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
        modal.show();
      }
+
      function toggleProjectDropdown(event) {
           event.stopPropagation();
           const dropdown = event.currentTarget.closest('li').querySelector('.project-dropdown');
@@ -40,6 +50,7 @@
          }
      });
 
+
      function RenderProjectsAsync(projects) {
          const projectDropdown = document.getElementById("projectDropdown");
 
@@ -47,13 +58,38 @@
          projectDropdown.innerHTML = ``;
          // Append each project as a <li>
          projects.forEach(project => {
-             const li = document.createElement("li");
-             li.innerHTML = `
-                 <a href="/Project/Details/${project.id}" class="nav-link text-dark ps-4">
-                     <i class="material-symbols-rounded opacity-5">folder</i>
-                     <span class="nav-link-text ms-2">${project.name}</span>
-                 </a>
-             `;
+            const li = document.createElement("li");
+
+            let projName = project.name;
+            projName = projName.length > 6 ? projName.substring(0, 6) + '...' : projName; //truncate the project name if too long
+            console.log(projName);
+
+          li.className = "px-2 py-1"; // padding for spacing
+
+          li.innerHTML = `
+               <div class="d-flex justify-content-between align-items-center w-100">
+               <a href="/Workflow/ProjectBoardView/${project.id}"
+                    class="nav-link text-dark d-flex align-items-center gap-2 p-0"
+                    id="proj_name" title="${project.name}" style="flex-grow:1;">
+                    <i class="material-symbols-rounded opacity-5">folder</i>
+                    <span class="nav-link-text">${projName}</span>
+               </a>
+
+               <div class="btn-group">
+                    <button type="button" class="btn p-0 bg-transparent border-0 dropdown-toggle"
+                         data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                    <a class="dropdown-item delete-project-btn" data-project-id="${project.id}">
+                         Delete Project
+                    </a>
+                    </li>
+                    </ul>
+               </div>
+               </div>
+          `;
+
              projectDropdown.appendChild(li);
          });
      }
@@ -88,11 +124,11 @@
              method: 'DELETE'
          });
 
-         if (response.ok) {
-             await FetchProjectsAsync(); // Refresh after delete
-         } else {
-             alert('Failed to delete project.');
-         }
+          if (response.ok) {
+         RenderProjectsAsync(await fetchProjects()); // Refresh projects after delete
+          } else {
+              alert("Failed to delete project.");
+          }
      }
 
 </script>
@@ -101,19 +137,13 @@
      <div class="sidenav-header">
           <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
           <a class="navbar-brand px-4 py-3 m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
-               <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
-               <span class="ms-1 text-sm text-dark">Creative Tim</span>
+               <img src="~/assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+               <span class="ms-1 text-sm text-dark">Taskflow</span>
           </a>
      </div>
      <hr class="horizontal dark mt-0 mb-2">
      <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
           <ul class="navbar-nav">
-               <li class="nav-item">
-                    <a class="nav-link @(ViewData["ActivePage"] as string == "Dashboard" ? "active bg-gradient-dark text-white" : "text-dark")" href="@Url.Action("Dashboard", "Home")">
-                         <i class="material-symbols-rounded opacity-5">dashboard</i>
-                         <span class="nav-link-text ms-1">Dashboard</span>
-                    </a>
-               </li>
                <li class="nav-item project-item position-relative">
                     <div class="nav-link d-flex justify-content-between align-items-center @(ViewData["ActivePage"] as string == "Template" ? "active bg-gradient-dark text-white" : "text-dark")">
                          <div class="d-flex align-items-center">
@@ -148,7 +178,7 @@
                               </div>
                          </div>
 
-                         <span class="project-actions text-white" onclick="toggleProjectDropdown(event)">
+                         <span class="project-actions text-white" >
                               <i class="material-symbols-rounded">add</i>
                          </span>
                     </div>
@@ -165,13 +195,6 @@
 
                     </ul>
                </li>
-               <li class="nav-item">
-                    <a class="nav-link @(ViewData["ActivePage"] as string == "Billing" ? "active bg-gradient-dark text-white" : "text-dark")" href="@Url.Action("Biling", "Home")">
-                         <i class="material-symbols-rounded opacity-5">receipt_long</i>
-                         <span class="nav-link-text ms-1">Billing</span>
-                    </a>
-               </li>
-
                <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
                </li>

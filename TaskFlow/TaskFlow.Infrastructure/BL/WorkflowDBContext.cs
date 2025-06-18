@@ -24,6 +24,20 @@ namespace TaskFlow.Infrastructure.BL
                 .HasForeignKey(s => s.ProjectId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Section>()
+               .HasMany(p => p.Tasks)
+               .WithOne()
+               .HasForeignKey(s => s.SectionId)
+               .IsRequired()
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UTask>()
+               .HasMany(p => p.Tasks)
+               .WithOne()
+               .HasForeignKey(s => s.ParentTaskId)
+               .IsRequired()
+               .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskFlow.Domain.Entities.Projects;
+using TaskFlow.Application.Contracts.Shared;
 
-namespace TaskFlow.Application.WorkFlow.Projects.Queries
+namespace TaskFlow.Infrastructure.UserTask.Command  
 {
-    public record GetProjectByIdQuery : IRequest<Project>
+    public class DeleteTaskCommand : IRequest<WorkflowResponse>
     {
         public ushort Id { get; set; }
     }

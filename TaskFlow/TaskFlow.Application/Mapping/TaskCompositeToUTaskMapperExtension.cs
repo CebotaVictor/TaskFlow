@@ -21,7 +21,7 @@ namespace TaskFlow.Application.Mapping
                 CreatedAt = Task.CreatedAt,
                 DueDate = Task.DueDate,
                 ParentTaskId = Task.ParentTaskId,
-                ProjectId = Task.ProjectId
+                SectionId = Task.SectionId
             };
 
             foreach(var subTask in Task.Tasks!)
@@ -49,7 +49,7 @@ namespace TaskFlow.Application.Mapping
                 CreatedAt = Task.CreatedAt,
                 DueDate = Task.DueDate,
                 ParentTaskId = Task.ParentTaskId,
-                ProjectId = Task.ProjectId
+                SectionId = Task.SectionId
             };
             return toUTask;
         }

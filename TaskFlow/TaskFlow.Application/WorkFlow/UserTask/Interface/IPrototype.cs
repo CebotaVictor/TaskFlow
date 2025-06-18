@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskFlow.Application.WorkFlow.UserTask.Handler
+namespace TaskFlow.Application.WorkFlow.UserTask.Interface
 {
-    internal class GetTaskQueryHandler
+    public interface IPrototype
     {
+        public IPrototype Clone();
     }
 }

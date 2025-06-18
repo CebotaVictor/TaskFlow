@@ -80,6 +80,7 @@ namespace TaskFlow1
                 client.BaseAddress = new Uri("https://localhost:7006/api/");
             });
 
+
             builder.Services.AddScoped<CookieGenerator>();
 
             builder.Services.AddHttpContextAccessor();
@@ -125,7 +126,7 @@ namespace TaskFlow1
                 options.AddPolicy("AllowFrontend",
                                   policy =>
                                   {
-                                      policy.WithOrigins("https://localhost:7129", "http://localhost:5228")
+                                      policy.WithOrigins("https://localhost:7129", "http://localhost:5176")
                                       .AllowAnyMethod()
                                       .AllowAnyHeader();
                                   });

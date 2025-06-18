@@ -25,22 +25,6 @@ namespace TaskFlow1.Controllers
             _user = user;
         }
 
-        public IActionResult Biling()
-        {
-            return View();
-        }
-
-
-        public IActionResult Dashboard()
-        {
-            return View();
-        }
-
-        public IActionResult Template()
-        {
-            return View();
-        }
-
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Profile(CancellationToken token)

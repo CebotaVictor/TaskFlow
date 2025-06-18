@@ -13,5 +13,7 @@ namespace TaskFlow.Application.Interfaces.Repository
         Task<Project> UpdateProjectSectionsAsync();
 
         Task<IEnumerable<Project>> GetAllProjectsAsync();
+
+        public Task<Project> GetProjectByIdAsync(ushort Id);
     }
 }

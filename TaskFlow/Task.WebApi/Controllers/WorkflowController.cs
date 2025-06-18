@@ -5,6 +5,10 @@ using TaskFlow.Application.WorkFlow.Projects.Command;
 using TaskFlow.Application.WorkFlow.Projects.Queries;
 using TaskFlow.Application.WorkFlow.Sections.Commands;
 using TaskFlow.Application.WorkFlow.Sections.Queries;
+using TaskFlow.Application.WorkFlow.UserTask.Command;
+using TaskFlow.Application.WorkFlow.UserTask.Handler;
+using TaskFlow.Application.WorkFlow.UserTask.Queries;
+using TaskFlow.Infrastructure.UserTask.Command;
 
 
 namespace TaskFlow.WebApi.Controllers
@@ -41,6 +45,20 @@ namespace TaskFlow.WebApi.Controllers
             }
         }
 
+        [HttpGet("GetProjectById")]
+        public async Task<IActionResult> GetAllProject(ushort Id,CancellationToken token)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetProjectByIdQuery { Id = Id }, token);
+                if (result == null) return NotFound(result);
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest("Failed to retrieve project list");
+            }
+        }
 
         [HttpPost("CreateProject")]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectCommand request, CancellationToken token)
@@ -98,6 +116,22 @@ namespace TaskFlow.WebApi.Controllers
         }
 
 
+        [HttpGet("GetAllSectionsFromProjectId")]
+        public async Task<IActionResult> GetAllSectionsFromProjectId(ushort Id, CancellationToken token)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetProjectByIdQuery { Id = Id}, token);
+                if (result == null) return NotFound(result);
+
+                return Ok(result.Sections);
+            }
+            catch
+            {
+                return BadRequest("Failed to retrieve project list");
+            }
+        }
+
         [HttpPost("CreateSection")]
         public async Task<IActionResult> CreateSection([FromBody] CreateSectionCommand request, CancellationToken token)
         {
@@ -135,5 +169,84 @@ namespace TaskFlow.WebApi.Controllers
                 return BadRequest($"Failed to delete section {ex.Message}");
             }
         }
+
+
+
+        [HttpPost("CreateTask")]
+        public async Task<IActionResult> CreateTask([FromBody] CreateTaskCommand request, CancellationToken token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _mediator.Send(request, token);
+                if (result == null) return BadRequest(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to create task {ex.Message}");
+            }
+        }
+
+        [HttpPost("CreateSubTask")]
+        public async Task<IActionResult> CreateSybTask([FromBody] CreateSubTaskCommand request, CancellationToken token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _mediator.Send(request, token);
+                if (result == null) return BadRequest(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to create subtask {ex.Message}");
+            }
+        }
+
+        [HttpDelete("DeleteTask")]
+        public async Task<IActionResult> DeleteTask(ushort Id, CancellationToken token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _mediator.Send(new DeleteTaskCommand { Id = Id }, token);
+                if (result == null) return BadRequest(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to delete task {ex.Message}");
+            }
+        }
+
+
+
+        [HttpGet("GetAllTasks")]
+        public async Task<IActionResult> GetAllTasks(CancellationToken token)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetAllTasksQuery(), token);
+                if (result == null || !result.Any()) return NotFound(result);
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest("Failed to retrieve task list");
+            }
+        }
+
+
+
     }
 }

@@ -56,7 +56,7 @@ namespace Task.WebApi
                 options.AddPolicy("AllowFrontend",
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:5176")
+                        policy.WithOrigins("https://localhost:7129", "http://localhost:5176")
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                     });

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NuGet.Common;
 using TaskFlow.Application.WorkFlow.Projects.Queries;
 using TaskFlow.WebApp.API.Interfaces;
+using TaskFlow1.Models;
 
 namespace TaskFlow.WebApp.Controllers
 {
@@ -15,7 +16,18 @@ namespace TaskFlow.WebApp.Controllers
         {
             _projectApiService = projectApiService ?? throw new NullReferenceException("IProject API Service is null");
         }
-        public ActionResult ProjectBoardView() { return View(); }
+
+        [HttpGet]
+        public async Task<IActionResult> ProjectBoardView(ushort Id, CancellationToken token) 
+        {
+
+            var result = await _projectApiService.GetProjectById(Id, token);
+            if(result == null)
+            {
+                return View("Error", new ErrorViewModel { RequestId = $"Project with id {Id} not found" });
+            }
+            return View(result); 
+        }
 
         [HttpGet]
         public async Task<IActionResult> ProjectListView(CancellationToken token)

@@ -11,6 +11,9 @@ using TaskFlow.Application.Users.Members.Commands;
 using TaskFlow.Application.Users.Members.Queries;
 using TaskFlow.Application.WorkFlow.Projects.Command;
 using TaskFlow.Application.WorkFlow.Projects.Handler;
+using TaskFlow.Application.WorkFlow.UserTask.Command;
+using TaskFlow.Application.WorkFlow.UserTask.Handler;
+using TaskFlow.Application.WorkFlow.UserTask.Queries;
 using TaskFlow.Domain.Entities.Labels;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.Domain.Entities.Tasks;
@@ -46,6 +49,13 @@ namespace TaskFlow.WebApi.Extentions
                 cfg.RegisterServicesFromAssemblyContaining<CreateProjectCommand>();
                 cfg.RegisterServicesFromAssemblyContaining<CreateProjectCommandHandler>();
                 cfg.RegisterServicesFromAssemblyContaining<WorkflowResponse>();
+
+                cfg.RegisterServicesFromAssemblyContaining<CreateSubTaskCommand>();
+                cfg.RegisterServicesFromAssemblyContaining<CreateTaskCommand>();
+                cfg.RegisterServicesFromAssemblyContaining<GetAllTasksQuery>();
+                cfg.RegisterServicesFromAssemblyContaining<GetAllTasksQueryHandler>();  
+                cfg.RegisterServicesFromAssemblyContaining<WorkflowResponse>();
+
             });
 
             service.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
@@ -62,6 +72,7 @@ namespace TaskFlow.WebApi.Extentions
             service.AddScoped<IWorkflowGenericRepository<UTask>, WorkflowGenericRepository<UTask>>();
             service.AddScoped<IMemberRepository, MemberRepository>();
             service.AddScoped<IAdminRepository, AdminRepository>();
+            service.AddScoped<ITaskRepository, TaskRepository>();
             service.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
             service.AddScoped<IWorkflowUnitOfWork, WorkflowUnitOfWork>();
             service.AddScoped<IProjectRepository, ProjectRepository>();

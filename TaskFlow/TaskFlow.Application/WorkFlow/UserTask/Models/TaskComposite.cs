@@ -12,16 +12,16 @@ using System.Reflection;
 
 namespace TaskFlow.Application.WorkFlow.UserTask.Contracts
 {
-    public sealed class TaskComposite : ITask
+    public sealed class TaskComposite : ITask, IPrototype
     {
         public ushort Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public TaskState Status { get; set; } = TaskState.InProgres;
         public DateTime CreatedAt { get; set; } = DateTime.Now.Date;
-        public DateTime? DueDate { get; set; }
-        public ushort? ParentTaskId { get; set; }
-        public ushort ProjectId { get; set; }
+        public DateTime DueDate { get; set; }
+        public ushort ParentTaskId { get; set; }
+        public ushort SectionId { get; set; }
         public List<ITask> ?Tasks { get; set; }
 
         public TaskState isCompleted()
@@ -31,6 +31,14 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Contracts
                 return this.Status;
             }
             return Tasks!.All(task => task.isCompleted() == TaskState.Complete) ? TaskState.Complete : TaskState.InProgres;
+        }
+
+        public IPrototype Clone()
+        {
+            Console.WriteLine("Copy is being made");
+            TaskComposite task = null;
+            task = (TaskComposite)this.MemberwiseClone();
+            return task;
         }
     }
 }

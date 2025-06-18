@@ -14,7 +14,7 @@ namespace TaskFlow.Application.WorkFlow.Projects.Command
     {
         public ushort Id { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 20, ErrorMessage = "Name must be at least 6 characters long")]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Name must be at least 6 characters long")]
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
