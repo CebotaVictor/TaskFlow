@@ -7,127 +7,141 @@
 <style>
 
      #projectDropdown {
-          display: block !important;
-          visibility: visible !important;
+     display: block !important;
+     visibility: visible !important;
      }
-     
+
 
 </style>
 
+
+
 <script>
 
-      document.addEventListener("DOMContentLoaded", () => {
-         FetchProjectsAsync();
+     const app_url = 'https://localhost:7006';
+
+
+     //function that is being called when the DOM is fully loaded
+     document.addEventListener("DOMContentLoaded", () => {
+          FetchProjectsAsync();
      });
 
+     //function to show the modal for creating a new project
      function showProjectModal() {
-       const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
-       modal.show();
+          const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
+          modal.show();
      }
 
      function toggleProjectDropdown(event) {
-          event.stopPropagation();
+          //event.stopPropagation(): Stops the click from bubbling up to the document click handler (which closes dropdowns).
+          // event.stopPropagation();
           const dropdown = event.currentTarget.closest('li').querySelector('.project-dropdown');
           dropdown.classList.toggle('show');
      }
 
+     //function to close the dropdown when clicking outside
      document.addEventListener('click', function () {
           document.querySelectorAll('.project-dropdown').forEach(d => d.classList.remove('show'));
      });
 
-      function toggleProjectMenu() {
-         const menu = document.getElementById('projectDropdownMenu');
-         menu.classList.toggle('show');
+
+     //give me a better explainetion of this function
+     // Toggle the visibility of the project dropdown menu
+     //what exactlly the toggle means
+     //it means to switch between two states, in this case, showing and hiding the menu
+     function toggleProjectMenu() {
+          const menu = document.getElementById('projectDropdownMenu');
+          menu.classList.toggle('show');
      }
 
      // Optional: close on click outside
      document.addEventListener('click', function (e) {
-         const menu = document.getElementById('projectDropdownMenu');
-         const toggle = document.querySelector('.dropdown-toggle-project');
+          const menu = document.getElementById('projectDropdownMenu');
+          const toggle = document.querySelector('.dropdown-toggle-project');
 
-         if (!toggle.contains(e.target)) {
-             menu.classList.remove('show');
-         }
+          if (!toggle.contains(e.target)) {
+               menu.classList.remove('show');
+          }
      });
 
 
      function RenderProjectsAsync(projects) {
-         const projectDropdown = document.getElementById("projectDropdown");
+          const projectDropdown = document.getElementById("projectDropdown");
 
-         // Clear all existing items
-         projectDropdown.innerHTML = ``;
-         // Append each project as a <li>
-         projects.forEach(project => {
-            const li = document.createElement("li");
+          // Clear all existing items
+          projectDropdown.innerHTML = ``;
+          // Append each project as a <li>
+          projects.forEach(project => {
+               const li = document.createElement("li");
 
-            let projName = project.name;
-            projName = projName.length > 6 ? projName.substring(0, 6) + '...' : projName; //truncate the project name if too long
-            console.log(projName);
+               let projName = project.name;
+               projName = projName.length > 6 ? projName.substring(0, 6) + '...' : projName; //truncate the project name if too long
+               console.log(projName);
 
-          li.className = "px-2 py-1"; // padding for spacing
+               li.className = "px-2 py-1"; // padding for spacing
 
-          li.innerHTML = `
+               li.innerHTML = `
                <div class="d-flex justify-content-between align-items-center w-100">
-               <a href="/Workflow/ProjectBoardView/${project.id}"
+                    <a href="/Workflow/ProjectBoardView/${project.id}"
                     class="nav-link text-dark d-flex align-items-center gap-2 p-0"
                     id="proj_name" title="${project.name}" style="flex-grow:1;">
                     <i class="material-symbols-rounded opacity-5">folder</i>
                     <span class="nav-link-text">${projName}</span>
-               </a>
-
-               <div class="btn-group">
-                    <button type="button" class="btn p-0 bg-transparent border-0 dropdown-toggle"
-                         data-bs-toggle="dropdown" aria-expanded="false">
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                    <a class="dropdown-item delete-project-btn" data-project-id="${project.id}">
-                         Delete Project
                     </a>
-                    </li>
-                    </ul>
-               </div>
-               </div>
-          `;
 
-             projectDropdown.appendChild(li);
-         });
+                    <div class="btn-group">
+                         <button type="button" class="btn p-0 bg-transparent border-0 dropdown-toggle"
+                         data-bs-toggle="dropdown" aria-expanded="false">
+                         </button>
+                         <ul class="dropdown-menu dropdown-menu-end">
+                         <li>
+                         <a class="dropdown-item delete-project-btn" data-project-id="${project.id}">
+                         Delete Project
+                         </a>
+                         </li>
+                         </ul>
+                    </div>
+               </div>
+               `;
+
+               projectDropdown.appendChild(li);
+          });
      }
 
-      async function FetchProjectsAsync() {
-         const response = await fetch('https://localhost:7006/api/Workflow/GetAllProjects');
-         if (response.ok) {
-             const projects = await response.json();
-             RenderProjectsAsync(projects);
-         } else {
-             console.error("Failed to fetch projects");
-         }
-         console.log(response);
+     async function FetchProjectsAsync() {
+          const response = await fetch(`${app_url}/api/Workflow/GetAllProjects`);
+          if (response.ok) {
+               const projects = await response.json();
+               RenderProjectsAsync(projects);
+          } else {
+               console.error("Failed to fetch projects");
+          }
+          console.log(response);
      }
 
-          // Handle project deletion
+     // Handle project deletion
      document.addEventListener("click", function(event) {
-         const deleteBtn = event.target.closest(".delete-project-btn");
-         if (deleteBtn) {
-             const projectId = deleteBtn.getAttribute("data-project-id");
-             if (projectId) {
-                 DeleteProjectAsync(projectId);
-             }
-         }
+          const deleteBtn = event.target.closest(".delete-project-btn");
+          if (deleteBtn) {
+               const projectId = deleteBtn.getAttribute("data-project-id");
+               if (projectId) {
+                    DeleteProjectAsync(projectId);
+               }
+          }
      });
 
-      async function DeleteProjectsAsync(projectId) {
-         const confirmed = confirm("Are you sure you want to delete this project?");
-         if (!confirmed) return;
+     async function DeleteProjectsAsync(projectId) {
+          const confirmed = confirm("Are you sure you want to delete this project?");
+          if (!confirmed) return;
 
-         const response = await fetch(`https://localhost:7006/api/Workflow/DeleteProject?Id=${projectId}`, {
-             method: 'DELETE'
-         });
+          const response = await fetch(`${app_url}/api/Workflow/DeleteProject?Id=${projectId}`, {
+               method: 'DELETE'
+          });
 
           if (response.ok) {
-         RenderProjectsAsync(await fetchProjects()); // Refresh projects after delete
+               RenderProjectsAsync(await fetchProjects()); // Refresh projects after delete
           } else {
-              alert("Failed to delete project.");
+               alert("Failed to delete project.");
           }
      }
 
@@ -206,18 +220,14 @@
                     </a>
                </li>
 
-               <li class="nav-item">
-                    <a class="nav-link text-dark" href="@Url.Action("Login", "Auth")">
-                         <i class="material-symbols-rounded opacity-5">login</i>
-                         <span class="nav-link-text ms-1">Sign In</span>
-                    </a>
-               </li>
 
-               <li class="nav-item">
-                    <a class="nav-link text-dark" href="@Url.Action("Register", "Auth")">
-                         <i class="material-symbols-rounded opacity-5">assignment</i>
-                         <span class="nav-link-text ms-1">Sign Up</span>
-                    </a>
+               <li>
+                    <form class="form-inline" asp-controller="Auth" asp-action="Logout" method="post">
+                         <button type="submit" class="nav-link text-dark ps-4">
+                              <i class="material-symbols-rounded opacity-5">add_circle</i>
+                              <span class="nav-link-text ms-2">Disconnect</span>
+                         </button>
+                    </form>
                </li>
 
           </ul>

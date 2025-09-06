@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.UnitOfWork;
-using TaskFlow.Domain.Entities.Labels;
+using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.Domain.Entities.Tasks;
 using TaskFlow.Infrastructure.BL;
@@ -18,13 +18,20 @@ namespace TaskFlow.Infrastructure.UnitOfWork
         public IWorkflowGenericRepository<Project> Project { get; }
         public IWorkflowGenericRepository<Section> Sections { get; }
         public IWorkflowGenericRepository<UTask> Tasks { get; }
+        public ITaskRepository TaskRepo { get; }
+        public IProjectRepository ProjectRepo { get; }
+        public ISectionRepository SectionRepo { get; }
 
 
-        public WorkflowUnitOfWork(IWorkflowGenericRepository<Project> project, IWorkflowGenericRepository<Section> sections, IWorkflowGenericRepository<UTask> tasks, WorkflowDBContext dbContext)
+        public WorkflowUnitOfWork(IWorkflowGenericRepository<Project> project, IWorkflowGenericRepository<Section> sections, 
+            IWorkflowGenericRepository<UTask> tasks, ITaskRepository taskRepo, IProjectRepository projectRepo, ISectionRepository sectionRepo, WorkflowDBContext dbContext)
         {
             Project = project;
             Sections = sections;
             Tasks = tasks;
+            TaskRepo = taskRepo;
+            ProjectRepo = projectRepo;
+            SectionRepo = sectionRepo;
             _dbContext = dbContext;
         }
 

@@ -29,7 +29,7 @@ namespace TaskFlow.Application.WorkFlow.Sections.Handlers
             if (request == null) { return new WorkflowResponse(null!); }
             try
             {
-                await _unitOfWork.Sections.DeleteByIdGenericAsync(request.Id);
+                await _unitOfWork.SectionRepo.DeleteSectionByIdAsync(request.Id);
                 if (await _unitOfWork.SaveChangesAsync() > 0)
                 {
                     return new WorkflowResponse($"Successfully deleted section with id {request.Id}");

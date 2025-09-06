@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Application.Interfaces.Repository;
-using TaskFlow.Domain.Entities.Labels;
+using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.Domain.Entities.Tasks;
 
@@ -15,6 +15,9 @@ namespace TaskFlow.Application.Interfaces.UnitOfWork
         public IWorkflowGenericRepository<Project> Project { get; }
         public IWorkflowGenericRepository<Section> Sections { get; }
         public IWorkflowGenericRepository<UTask> Tasks { get; }
+        public ITaskRepository TaskRepo { get; }
+        public IProjectRepository ProjectRepo { get; }
+        public ISectionRepository SectionRepo { get; }
 
         Task<int> SaveChangesAsync();
     }

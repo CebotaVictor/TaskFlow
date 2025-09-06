@@ -8,7 +8,7 @@ using TaskFlow.Application.Interfaces.UnitOfWork;
 
 namespace TaskFlow.Infrastructure.UnitOfWork
 {
-    public class UnitOFWorkFactory
+    public class UnitOFWorkFactory : IUnitOfWorkFactory
     {
         private readonly IServiceProvider _serviceProvider;
 

@@ -41,7 +41,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <form asp-action="Login" asp-controller="Auth" method="post">
+                 <form asp-action="Login" asp-controller="Auth" method="post" data-ajax="false">
                     @Html.AntiForgeryToken()
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>

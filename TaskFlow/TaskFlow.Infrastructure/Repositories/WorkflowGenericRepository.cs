@@ -53,11 +53,11 @@ namespace TaskFlow.Infrastructure.Repositories
                         return true;
                     }
                 }
-                throw new NullReferenceException($"Error while deleting pacient {Id}");
+                throw new NullReferenceException($"Error while deleting entity {Id}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error while deleting pacient {Id} {ex.Message}");
+                _logger.LogError($"Error while deleting entity {Id} {ex.Message}");
                 return false;
             }
         }
@@ -72,7 +72,7 @@ namespace TaskFlow.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error while deleting pacient {Id} {ex.Message}");
+                _logger.LogError($"Error while deleting entity {Id} {ex.Message}");
                 return null!;
             }
         }

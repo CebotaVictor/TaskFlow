@@ -1,5 +1,5 @@
 ﻿using TaskFlow.Application.WorkFlow.Projects.Command;
-using TaskFlow.Domain.Entities.Labels;
+using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 
 namespace TaskFlow.WebApp.API.Interfaces

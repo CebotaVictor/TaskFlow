@@ -17,11 +17,11 @@ namespace TaskFlow.Domain.Entities.Tasks
         public ushort Id { get; set; }
         [Required]
         [Column("TaskTitle",Order = 1)]
-        public string Title { get; set; } = string.Empty;
+        public string ?Title { get; set; } = string.Empty;
         [Column("TaskDescription", Order = 2)]
-        public string Description { get; set; } = string.Empty;
+        public string ?Description { get; set; } = string.Empty;
         [Column("TaskStatus", Order = 3)]
-        public TaskState Status { get; set; } = TaskState.InProgres;
+        public TaskState ?Status { get; set; } = TaskState.InProgres;
         [Column(Order = 4)]
         public DateTime? CreatedAt { get; set; } = DateTime.Now.Date;
         [Column(Order = 5)]
@@ -30,6 +30,6 @@ namespace TaskFlow.Domain.Entities.Tasks
         public ushort ?ParentTaskId { get; set; }
         [Column(TypeName = "smallint")]
         public ushort ?SectionId { get; set; }
-        public ICollection<UTask> Tasks { get; } = new List<UTask>();
+        public ICollection<UTask> Tasks { get; } = new List<UTask>(); // navigation property for the subtasks
     }
 }

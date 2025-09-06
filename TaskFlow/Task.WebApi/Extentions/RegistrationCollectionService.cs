@@ -14,7 +14,7 @@ using TaskFlow.Application.WorkFlow.Projects.Handler;
 using TaskFlow.Application.WorkFlow.UserTask.Command;
 using TaskFlow.Application.WorkFlow.UserTask.Handler;
 using TaskFlow.Application.WorkFlow.UserTask.Queries;
-using TaskFlow.Domain.Entities.Labels;
+using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.Domain.Entities.Tasks;
 using TaskFlow.Domain.Entities.Users;
@@ -73,6 +73,7 @@ namespace TaskFlow.WebApi.Extentions
             service.AddScoped<IMemberRepository, MemberRepository>();
             service.AddScoped<IAdminRepository, AdminRepository>();
             service.AddScoped<ITaskRepository, TaskRepository>();
+            service.AddScoped<ISectionRepository, SectionRepository>();
             service.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
             service.AddScoped<IWorkflowUnitOfWork, WorkflowUnitOfWork>();
             service.AddScoped<IProjectRepository, ProjectRepository>();

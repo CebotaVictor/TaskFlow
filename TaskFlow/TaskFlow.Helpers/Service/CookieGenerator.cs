@@ -23,7 +23,7 @@ namespace TaskFlow.Application.Autentication.Handlers
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.None,
-                Expires = DateTimeOffset.UtcNow.AddMinutes(30)
+                Expires = DateTimeOffset.UtcNow.UtcDateTime.AddMinutes(30)
             });
 
         }

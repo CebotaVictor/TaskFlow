@@ -30,7 +30,7 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Handler
             if(request == null) return Enumerable.Empty<UTask>();
             try
             {
-                var tasks = await _taskRepository.GetAllTasks();
+                var tasks = await _taskRepository.GetAllTasksAsync();
                 if (tasks == null || !tasks.Any())
                 {
                     _logger.LogWarning("No tasks found.");

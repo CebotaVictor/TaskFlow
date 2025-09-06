@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Domain.Entities.Projects;
-using TaskFlow.Domain.Entities.Labels;
+using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Tasks;
 namespace TaskFlow.Infrastructure.BL
 {
@@ -16,6 +16,7 @@ namespace TaskFlow.Infrastructure.BL
         public DbSet<Section> Sections { get; set; }
         public DbSet<UTask> Tasks { get; set; }
 
+        //object mapping, Project and Sections, Sections and Tasks, Tasks and Subtasks
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Project>()
@@ -36,8 +37,7 @@ namespace TaskFlow.Infrastructure.BL
                .HasMany(p => p.Tasks)
                .WithOne()
                .HasForeignKey(s => s.ParentTaskId)
-               .IsRequired()
-               .OnDelete(DeleteBehavior.NoAction);
+               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

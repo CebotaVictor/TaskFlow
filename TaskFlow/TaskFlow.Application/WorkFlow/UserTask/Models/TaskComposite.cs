@@ -20,7 +20,7 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Contracts
         public TaskState Status { get; set; } = TaskState.InProgres;
         public DateTime CreatedAt { get; set; } = DateTime.Now.Date;
         public DateTime DueDate { get; set; }
-        public ushort ParentTaskId { get; set; }
+        public ushort ?ParentTaskId { get; set; }
         public ushort SectionId { get; set; }
         public List<ITask> ?Tasks { get; set; }
 

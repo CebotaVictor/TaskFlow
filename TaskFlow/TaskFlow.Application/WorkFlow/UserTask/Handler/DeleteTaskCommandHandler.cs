@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Application.Contracts.Shared;
+using TaskFlow.Application.Interfaces.Repository;
 using TaskFlow.Application.Interfaces.UnitOfWork;
 using TaskFlow.Application.WorkFlow.Projects.Handler;
 using TaskFlow.Infrastructure.UserTask.Command;
@@ -15,8 +16,8 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Handler
 {
     public class DeleteTaskCommandHandler : IRequestHandler<DeleteTaskCommand, WorkflowResponse>
     {
-        private IWorkflowUnitOfWork _unitOfWork;
         private readonly ILogger<DeleteTaskCommandHandler> _logger;
+        private readonly IWorkflowUnitOfWork _unitOfWork;
 
         public DeleteTaskCommandHandler(IWorkflowUnitOfWork unitOfWork, ILogger<DeleteTaskCommandHandler> logger)
         {
@@ -28,7 +29,7 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Handler
             if (request == null) { return new WorkflowResponse(null!); }
             try
             {
-                await _unitOfWork.Tasks.DeleteByIdGenericAsync(request.Id);
+                await _unitOfWork.TaskRepo.DeleteTaskByIdAsync(request.Id);
                 if (await _unitOfWork.SaveChangesAsync() > 0)
                 {
                     return new WorkflowResponse($"Successfully deleted task with id {request.Id}");

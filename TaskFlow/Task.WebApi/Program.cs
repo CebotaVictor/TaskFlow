@@ -37,7 +37,7 @@ namespace Task.WebApi
             });
 
             builder.Services.AddResponseCompression();
-            
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
             builder.Services.AddDbContext<UsersDBContext>(options =>

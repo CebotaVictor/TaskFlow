@@ -31,7 +31,9 @@ namespace TaskFlow1
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
+
             builder.Services.AddControllersWithViews();
+
 
             builder.Services.AddWebOptimizerConfig();
 
@@ -47,12 +49,12 @@ namespace TaskFlow1
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddAutoMapper(typeof(Program));
-                
+
             builder.Services.AddResponseCompression(options =>
             {
-                options.EnableForHttps = false;
-                //options.Providers.Add<BrotliCompressionProvider>();
-                //options.Providers.Add<GzipCompressionProvider>();
+                options.EnableForHttps = true;
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
             });
 
             //builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
@@ -73,7 +75,7 @@ namespace TaskFlow1
             builder.Services.AddHttpClient<IAuth, AuthAPIService>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7006/api/ApiAuth/");
-                });
+            });
 
             builder.Services.AddHttpClient<IUser, UserApiService>(client =>
             {
@@ -145,7 +147,7 @@ namespace TaskFlow1
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseCors("AllowFrontend");

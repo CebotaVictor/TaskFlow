@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
 using System.ComponentModel.Design.Serialization;
+using System.Text.Json;
 using TaskFlow.Application.Autentication.Handlers;
 using TaskFlow.Application.Contracts.Authentication;
 using TaskFlow.Domain.Entities.Users;
@@ -31,9 +33,9 @@ namespace TaskFlow.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterRequestApi request,CancellationToken token)
+        public async Task<IActionResult> Register(RegisterRequestApi request, CancellationToken token)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(request);
             }
@@ -78,7 +80,19 @@ namespace TaskFlow.WebApi.Controllers
 
             _cookieGenerator.CreateCookie(response);
 
+            TempData["Message"] = JsonSerializer.Serialize(Request.Cookies);
+
             return RedirectToAction("Profile", "Home");
+        }
+
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            // Clear the cookie
+            Response.Cookies.Delete("my_token");
+            // Redirect to the login page or home page
+            return RedirectToAction("Login", "Auth");
         }
 
 

@@ -20,7 +20,7 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Contracts
         public TaskState Status { get; set; } = TaskState.InProgres;
         public DateTime CreatedAt { get; set; } = DateTime.Now.Date;
         public DateTime DueDate { get; set; }
-        public ushort ParentTaskId { get; set; }
+        public ushort ?ParentTaskId { get; set; }
         public ushort SectionId { get; set; }
 
         public TaskState isCompleted()
@@ -31,7 +31,7 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Contracts
         public IPrototype Clone()
         {
             Console.WriteLine("Copy is being made");
-            LeafTask task = null;
+            LeafTask task = null!;
             task = (LeafTask)this.MemberwiseClone();
             return task;
         }

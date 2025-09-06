@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TaskFlow.Application.WorkFlow.Projects.Command;
@@ -15,6 +16,7 @@ namespace TaskFlow.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class WorkflowController : ControllerBase
     {
         private IMediator _mediator;

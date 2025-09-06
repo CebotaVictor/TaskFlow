@@ -16,7 +16,7 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Handler
 {
     public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, WorkflowResponse>
     {
-        private IWorkflowUnitOfWork _unitOfWork;
+        private readonly IWorkflowUnitOfWork _unitOfWork;
         private readonly ILogger<CreateTaskCommandHandler> _logger;
 
         public CreateTaskCommandHandler(IWorkflowUnitOfWork unitOfWork, ILogger<CreateTaskCommandHandler> logger)
@@ -44,7 +44,7 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Handler
                 {
                     return new WorkflowResponse(newTask.Title);
                 }
-                return new WorkflowResponse(null!);
+                return new WorkflowResponse(null!);                  
             }
             catch (Exception ex)
             {

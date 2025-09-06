@@ -9,6 +9,7 @@ namespace TaskFlow.Application.Interfaces.Repository
 {
     public interface ITaskRepository
     {
-        Task<IEnumerable<UTask>> GetAllTasks();
+        Task<IEnumerable<UTask>> GetAllTasksAsync();
+        Task<bool> DeleteTaskByIdAsync(ushort Id);
     }
 }

@@ -26,7 +26,7 @@ namespace TaskFlow.WebApp.Controllers
             {
                 return View("Error", new ErrorViewModel { RequestId = $"Project with id {Id} not found" });
             }
-            return View(result); 
+            return View(result);
         }
 
         [HttpGet]

@@ -13,21 +13,3 @@ namespace TaskFlow.Application.WorkFlow.UserTask.Interface
         TaskState isCompleted();
     }
 }
-
-
-
-
-/*
- * 
- * 
-task - isComplete
-|
-V
-[
-
-task,...,
-|
-V
-task
-]
- */

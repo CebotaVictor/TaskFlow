@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.Domain.Entities.Tasks;
 
-namespace TaskFlow.Domain.Entities.Labels
+namespace TaskFlow.Domain.Entities.WSections
 {
     [Table("sections", Schema = "TaskFlow")]
     public class Section

@@ -9,7 +9,7 @@ using TaskFlow.Application.Contracts.Shared;
 using TaskFlow.Application.Interfaces.UnitOfWork;
 using TaskFlow.Application.WorkFlow.Projects.Handler;
 using TaskFlow.Application.WorkFlow.Sections.Commands;
-using TaskFlow.Domain.Entities.Labels;
+using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 
 namespace TaskFlow.Application.WorkFlow.Sections.Handlers

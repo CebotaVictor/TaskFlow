@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace TaskFlow.Application.Interfaces.UnitOfWork
 {
     public interface IUnitOfWorkFactory
     {
-
+        public IUsersUnitOfWork CreateUsersUnitOfWork();
+        public IWorkflowUnitOfWork CreateWorkFlowUnitOfWork();
     }
 }
