@@ -5,6 +5,7 @@ using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.WebApp.API.Interfaces;
 using UtmHttp.Utility;
 
+
 namespace TaskFlow.WebApp.API.Services
 {
     public class ProjectAPIService : IProject
@@ -20,32 +21,22 @@ namespace TaskFlow.WebApp.API.Services
             try
             {
                 var response = await _httpClient.GetAsync("GetAllProjects", token);
-                if (response.IsSuccessStatusCode)
+
+                if (response.Content != null)
                 {
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<Project>>(token);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content
+                        /*The Empty<TResult>() method caches an empty sequence of type TResult. When the object it returns is enumerated, it yields no elements*/
+                        .ReadFromJsonAsync<IEnumerable<Project>>(token) ?? Enumerable.Empty<Project>();
+                    }
                 }
+
                 return null!;
             }
             catch (Exception ex)
             {
                 throw new Exception($"Failed to retrieve projects: {ex.Message}");
-            }
-        }
-
-        public async Task<Project> GetProjectById(ushort Id, CancellationToken token)
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync($"GetProjectById?Id={Id}", token);
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadFromJsonAsync<Project>(token);
-                }
-                return null!;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to retrieve project: {ex.Message}");
             }
         }
 
@@ -56,7 +47,7 @@ namespace TaskFlow.WebApp.API.Services
                 var response = await _httpClient.GetAsync($"GetProjectById?Id={Id}", token);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadFromJsonAsync<Project>(token);
+                    return await response.Content.ReadFromJsonAsync<Project>(token) ?? new Project();
                 }
                 return null!;
             }

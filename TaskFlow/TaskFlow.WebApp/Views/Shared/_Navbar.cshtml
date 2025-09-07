@@ -1,22 +1,43 @@
 ﻿
 
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
-     <div class="container-fluid py-1 px-3">
-          <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-               <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-               </div>
-               <ul class="navbar-nav d-flex align-items-center  justify-content-end">
-                    <li class="nav-item dropdown pe-3 d-flex align-items-center">
-                         <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                              <i class="material-symbols-rounded">notifications</i>
-                         </a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center">
-                         <a href="@Url.Action("Profile", "Home")" class="nav-link text-body font-weight-bold px-0">
-                              <i class="material-symbols-rounded">account_circle</i>
-                         </a>
-                    </li>
-               </ul>
-          </div>
-     </div>
+<style>
+     .project-navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          
+          width: 100% !important;
+          z-index: 1050;
+          background-color:#F3F3F3;
+          border-bottom: 1px solid #1E1E2F;
+          height: 50px;    
+          margin:0;
+          padding: 0;
+     }
+
+     body {
+     padding-top: 70px;      /* Match navbar height */
+     }
+
+</style>
+
+
+<nav class="project-navbar navbar-main navbar-expand-lg fixed-top shadow-none" id="navbarBlur" data-scroll="true">
+    <div class="w-100 d-flex align-items-center justify-content-between px-3">
+        <button class="btn btn-light me-3" id="sidebarToggle">☰</button>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar"></div>
+        <ul class="navbar-nav d-flex align-items-center justify-content-end">
+            <li class="nav-item dropdown pe-3 d-flex align-items-center">
+                <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="material-symbols-rounded">notifications</i>
+                </a>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+                <a href="@Url.Action("Profile", "Home")" class="nav-link text-body font-weight-bold px-0">
+                    <i class="material-symbols-rounded">account_circle</i>
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>
+

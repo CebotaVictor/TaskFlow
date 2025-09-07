@@ -1,15 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿
 <style>
 
      #projectDropdown {
-     display: block !important;
-     visibility: visible !important;
+          display: block !important;
+          visibility: visible !important;
      }
+
+#sidenav-main {
+    position: fixed;
+    top: 50px;             /* Same as navbar height */
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 70px); 
+    overflow-y: auto;
+    z-index: 1040;
+    padding-left: 0;  /* Remove Bootstrap default padding */
+    padding-right: 0;
+}
+
+main {
+    margin-left: 250px;    /* Sidebar width */
+}
+/* Sidebar collapsible behavior for small screens */
+     @@media (max-width: 1200px) {
+
+          #sidenav-main {
+               transform: translateX(-110%);
+               transition: transform 0.3s ease;
+          }
+
+          #sidenav-main.show {
+               transform: translateX(0);
+          }
+     
+     }
+
 
 
 </style>
@@ -21,6 +46,16 @@
      const app_url = 'https://localhost:7006';
 
 
+     document.addEventListener('DOMContentLoaded', () => {
+          const toggleButton = document.getElementById('sidebarToggle');
+          const sideNav = document.getElementById('sidenav-main');
+
+          if(toggleButton && sideNav){
+               toggleButton.addEventListener('click', () =>{
+                    sideNav.classList.toggle('show');
+               });
+          }
+     }); 
      //function that is being called when the DOM is fully loaded
      document.addEventListener("DOMContentLoaded", () => {
           FetchProjectsAsync();
@@ -147,14 +182,18 @@
 
 </script>
 
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2" id="sidenav-main">
-     <div class="sidenav-header">
-          <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-          <a class="navbar-brand px-4 py-3 m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
-               <img src="~/assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
-               <span class="ms-1 text-sm text-dark">Taskflow</span>
-          </a>
-     </div>
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white" id="sidenav-main">
+
+    <div class="sidenav-header d-flex align-items-center justify-content-between px-3">
+    <i class="fas fa-times cursor-pointer text-dark opacity-5 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+
+    <a class="navbar-brand d-flex align-items-center m-0" 
+       href="https://demos.creative-tim.com/material-dashboard/pages/dashboard" 
+       target="_blank">
+        <img src="~/assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+        <span class="ms-1 text-sm text-dark">Taskflow</span>
+    </a>
+</div>
      <hr class="horizontal dark mt-0 mb-2">
      <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
           <ul class="navbar-nav">

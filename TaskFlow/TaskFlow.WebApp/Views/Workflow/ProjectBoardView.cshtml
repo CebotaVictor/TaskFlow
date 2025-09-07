@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿
 
 @model TaskFlow.Domain.Entities.Projects.Project;
 
@@ -238,13 +233,12 @@
           document.addEventListener('click', (event) => {
                if (event.target.classList.contains('add-column-plus')) {
                     const column = event.target.closest('.col-md-3.board-column');
-
                     const newTask = document.createElement('div');
                     newTask.className = 'card task-card p-3';
                     newTask.innerHTML = `
-                  <h6>New Task</h6>
-                  <span class="text-xs">Due: --</span>
-                `;
+                         <h6>New Task</h6>
+                         <span class="text-xs">Due: --</span>
+                    `;
 
                     column.appendChild(newTask);
                }
