@@ -9,6 +9,7 @@ using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.Domain.Entities.Tasks;
 using TaskFlow.Infrastructure.BL;
+using System.Diagnostics;
 
 namespace TaskFlow.Infrastructure.UnitOfWork
 {
@@ -22,7 +23,7 @@ namespace TaskFlow.Infrastructure.UnitOfWork
         public IProjectRepository ProjectRepo { get; }
         public ISectionRepository SectionRepo { get; }
 
-
+        [DebuggerStepThrough]
         public WorkflowUnitOfWork(IWorkflowGenericRepository<Project> project, IWorkflowGenericRepository<Section> sections, 
             IWorkflowGenericRepository<UTask> tasks, ITaskRepository taskRepo, IProjectRepository projectRepo, ISectionRepository sectionRepo, WorkflowDBContext dbContext)
         {

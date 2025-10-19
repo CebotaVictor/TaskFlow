@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace TaskFlow.Infrastructure.Repositories
         private readonly WorkflowDBContext? _context;
         private readonly ILogger<TaskRepository> _logger;
 
+        [DebuggerStepThrough]
         public TaskRepository(WorkflowGenericRepository<UTask>? repository, WorkflowDBContext? context, ILogger<TaskRepository> logger)
         {
             _repository = repository;

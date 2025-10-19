@@ -4,6 +4,9 @@ using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.WebApp.API.Interfaces;
 using UtmHttp.Utility;
+using TaskFlow.Application.Contracts.Workflow;
+using TaskFlow.Application.Mapping;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 
 namespace TaskFlow.WebApp.API.Services
@@ -48,6 +51,23 @@ namespace TaskFlow.WebApp.API.Services
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadFromJsonAsync<Project>(token) ?? new Project();
+                }
+                return null!;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to retrieve project: {ex.Message}");
+            }
+        }
+
+        public async Task<IEnumerable<Section>> GetAllSectionsByProjectIdAsync(ushort Id, CancellationToken token)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"GetAllSectionsFromProjectId?Id={Id}", token);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<Section>>(token) ?? Enumerable.Empty<Section>().ToList();
                 }
                 return null!;
             }

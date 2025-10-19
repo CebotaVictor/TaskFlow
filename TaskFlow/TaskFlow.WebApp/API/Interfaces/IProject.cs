@@ -8,5 +8,6 @@ namespace TaskFlow.WebApp.API.Interfaces
     {
         Task<IEnumerable<Project>> GetAllProjectsAsync(CancellationToken token);
         Task<Project> GetProjectByIdAsync(ushort Id,CancellationToken token);
+        Task<IEnumerable<Section>> GetAllSectionsByProjectIdAsync(ushort Id, CancellationToken token);
     }
 }

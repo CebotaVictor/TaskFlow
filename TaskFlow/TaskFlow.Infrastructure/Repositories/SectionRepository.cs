@@ -11,6 +11,7 @@ using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Tasks;
 using TaskFlow.Infrastructure.BL;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using System.Diagnostics;
 namespace TaskFlow.Infrastructure.Repositories
 {
     public class SectionRepository : ISectionRepository
@@ -21,7 +22,7 @@ namespace TaskFlow.Infrastructure.Repositories
         private readonly ILogger<SectionRepository> _logger;
         private readonly ITaskRepository _taskRepository;
 
-
+        [DebuggerStepThrough]
         public SectionRepository(WorkflowGenericRepository<Section>? repository, ITaskRepository taskRepository, WorkflowDBContext? context,ILogger<SectionRepository> logger)
         {
             _repository = repository ?? throw new NullReferenceException("The WorkflowGenericRepository is null in SectionRepository");

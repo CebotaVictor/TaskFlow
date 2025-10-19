@@ -126,12 +126,12 @@ namespace TaskFlow1
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontend",
-                                  policy =>
-                                  {
-                                      policy.WithOrigins("https://localhost:7129", "http://localhost:5176")
-                                      .AllowAnyMethod()
-                                      .AllowAnyHeader();
-                                  });
+                    policy =>
+                    {
+                        policy.WithOrigins("https://localhost:7129", "http://localhost:5176")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
             });
 
             var app = builder.Build();
@@ -147,8 +147,9 @@ namespace TaskFlow1
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseWebOptimizer();
 
             app.UseCors("AllowFrontend");
 
@@ -158,7 +159,6 @@ namespace TaskFlow1
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseWebOptimizer();
             app.MapStaticAssets();
 
             app.AddRouteConfig(); 

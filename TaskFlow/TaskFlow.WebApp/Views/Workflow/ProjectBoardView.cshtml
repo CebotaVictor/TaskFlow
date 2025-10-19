@@ -1,49 +1,47 @@
-﻿
-
-@model TaskFlow.Domain.Entities.Projects.Project;
+﻿@model TaskFlow.Domain.Entities.Projects.Project;
 
 @{
-     ViewData["Title"] = "View";
-     Layout = "_Layout";
+    ViewData["Title"] = "View";
+    Layout = "_Separated_Layout";
 }
 
 
 <style>
+
      body {
           background-color: #1e1e2f;
-          color: white;
+          color: black;
      }
      /* Make the board-column relative for absolute positioning of the plus sign */
      .board-column {
           position: relative;
      }
 
-     /* Style and position the plus sign */
-     .board-column .add-column-plus {
-               
-          font-size: 1.5rem; 
-          color: #f8f9fa; 
-          opacity: 0; 
-          transition: opacity 0.3s ease-in-out;
-          cursor: pointer;
-          padding: 5px;
-          background-color: #2b2b3c
-     }
+          /* Style and position the plus sign */
+          .board-column .add-column-plus {
+               font-size: 1.5rem;
+               color: #f8f9fa;
+               opacity: 0;
+               transition: opacity 0.3s ease-in-out;
+               cursor: pointer;
+               padding: 5px;
+               background-color: #2b2b3c
+          }
 
-     .board-column:hover .add-column-plus,
-     .board-column:hover .three-dots {
-          opacity: 1;
-     }
+          .board-column:hover .add-column-plus,
+          .board-column:hover .three-dots {
+               opacity: 1;
+          }
 
-     .board-column .three-dots {
-          font-size: 1.5rem; /* Make it visible */
-          color: #f8f9fa; /* Light color for visibility on dark background */
-          opacity: 0;
-          transition: opacity 0.3s ease-in-out; /* Smooth transition */
-          cursor: pointer;
-          padding: 5px;
-          background-color: #2b2b3c
-     }
+          .board-column .three-dots {
+               font-size: 1.5rem; /* Make it visible */
+               color: #f8f9fa; /* Light color for visibility on dark background */
+               opacity: 0;
+               transition: opacity 0.3s ease-in-out; /* Smooth transition */
+               cursor: pointer;
+               padding: 5px;
+               background-color: #2b2b3c
+          }
 
      .btn.dropdown-toggle::after {
           display: none;
@@ -65,7 +63,7 @@
           border-radius: 10px;
           padding: 15px;
           margin: 10px;
-          min-height: 500px;
+          min-height: 410px;
           max-height: 500px;
           overflow-y: auto;
      }
@@ -79,7 +77,7 @@
      }
 
           .task-card h6 {
-               font-size: 16px;    
+               font-size: 16px;
           }
 
      .add-task {
@@ -91,324 +89,224 @@
           cursor: pointer;
      }
 
-     #basic-button{
+     #basic-button {
           opacity: 0.4;
      }
 
-     .bg-hex-30{
-          background: color #A3A3FF;
+     /* .bg-hex-30{
+               background: color #A3A3FF;
+          } */
+
+
+     .projectNavbar {
+          background-color: #2b2b3c;
+          position: relative;
+          bottom: 20px;
+     }
+
+     .ProjectContainer {
+          position: relative;
+          bottom: 45px;
+     }
+
+     .task-card .text-xs {
+          font-size: 0.8rem;
+     }
+
+     .task-card .dropdown-menu {
+          min-width: 200px;
      }
 
 </style>
 
 
-
 @section Menu{
-     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <nav class="projectNavbar navbar navbar-expand">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav gap-3 ms-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#"><i data-feather="edit"></i> Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#"><i data-feather="list"></i> List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#"><i data-feather="clipboard"></i> Board</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#"><i data-feather="calendar"></i> Calendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#"><i data-feather="message-square"></i> Messages</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-     <nav class="navbar navbar-expand">
-          <div class="container-fluid">
 
-          <!-- Toggler for mobile -->
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-          </button>
+     <div class="modal fade" id="newSectionModal" tabindex="-1" aria-labelledby="newSectionModalLabel" aria-hidden="true">
 
-          <!-- Menu -->
-          <div class="collapse navbar-collapse" id="navbarNav">
-               <ul class="navbar-nav gap-3 ms-0">
-               <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><i data-feather="book-open"></i> Overview</a>
-               </li>
-               <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><i data-feather="list"></i> List</a>
-               </li>
-               <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><i data-feather="clipboard"></i> Board</a>
-               </li>
-               <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><i data-feather="calendar"></i> Calendar</a>
-               </li>
-               <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><i data-feather="message-square"></i> Messages</a>
-               </li>
-               </ul>
+          <div class="modal-dialog modal-dialog-centered">
+
+               <div class="modal-content bg-dark text-white">
+
+                    <div class="modal-header border-0">
+
+                         <h5 class="modal-title text-white" id="newSectionModal">New section</h5>
+
+                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                         <form id="create-section-form">
+
+                              <label for="SectionName">Section Name:</label>
+
+                              <input type="text" id="SectionName" name="SectionName" value="" required />
+
+                              <input type="submit" value="Submit" class="submit" />
+
+                              <div id="project-data" data-project-id="@Model.Id"></div>
+
+                         </form>
+
+                    </div>
+
+               </div>
+
           </div>
 
-          </div>
-     </nav>
+     </div>
 
 
-     <div class="container-fluid py-4">
-          <h2 class="text-white mb-4">Project Board</h2>
-          <div class="row flex-nowrap overflow-auto align-items-start">
-               <div class="col-md-3 board-column d-flex align-items-center justify-content-center" id="basic-button" onclick="showSectionModal()">
 
-                    <button class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center"
-                         style="width: 60px; height: 60px; max-width: 60px; max-height: 60px; font-size: 2rem; border-width: 2px;">
-                         +
-                    </button>
+     <div class="modal fade" id="newTaskModal" tabindex="-1" aria-labelledby="newTaskModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content bg-dark text-white">
+                    <div class="modal-header border-0">
+                         <h5 class="modal-title text-white" id="newSectionModal">New Task</h5>
+                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
+                         <form id="create-task-form">
+                              <label for="SectionName">Task Name:</label>
+                              <input type="text" id="TaskName" name="TaskName" value="" required />
+                              <input type="submit" value="Submit" class="submit" />
+                              <div id="project-data"></div>
+                         </form>
+                    </div>
                </div>
           </div>
      </div>
+
+
+    <div class="ProjectContainer container-fluid py-4">
+        <h2 class="text-white mb-4">Project Board</h2>
+        <div class="ProjectDiv row flex-nowrap overflow-auto align-items-start" id="project-board-container">
+            
+            @if (Model.Sections != null)
+            {
+                @foreach (var mySection in Model.Sections)
+                {
+                         <div class="col-md-3 board-column" data-section-id="@mySection.Id">
+                        <h5 class="mb-3 text-white d-flex justify-content-between align-items-center board-header">
+                                   <span>@mySection.Name</span>
+                            <div class="d-flex gap-3 board-actions">
+                                        <button class="btn btn-sm p-0 m-0 bg-transparent border-0 add-task-btn" data-section-id="@mySection.Id">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus add-column-plus" viewBox="0 0 16 16">
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn p-0 m-0 bg-transparent border-0 dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                             class="bi bi-three-dots three-dots" viewBox="0 0 16 16">
+                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                        </svg>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item delete-section-btn">Delete Section</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </h5>
+
+                        @if (mySection.Tasks != null)
+                        {
+                            @foreach (var task in mySection.Tasks)
+                            {
+                                 <div class="card task-card p-3 mb-2" data-task-id="@task.Id" data-section-id="@mySection.Id">
+                                   <div class="d-flex justify-content-between align-items-center task-header">
+                                        <h6>@task.Title</h6>
+                                        <div class="task-actions d-flex gap-2">
+                                             <button class="btn btn-sm p-0 m-0 bg-transparent border-0 add-subtask-btn" data-task-id="@task.Id" title="Add Subtask">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                  </svg>
+                                             </button>
+                                             <button class="btn btn-sm p-0 m-0 bg-transparent border-0" title="Remove Task">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                  </svg>
+                                             </button>
+                                        </div>
+                                   </div>
+
+                                   <!-- Two-column row: due date and subtask dropdown -->
+                                   <div class="d-flex justify-content-between align-items-center mt-2">  
+                                        <span class="text-xs text-muted">
+
+                                             Due: @(task.DueDate?.ToString("MM/dd/yyyy") ?? "--")
+                                        </span>
+                                        <!-- Subtask dropdown -->
+                                        <div class="dropdown">
+                                             <button class="btn btn-sm bg-transparent border-0 text-muted d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                                                  <span class="ms-1">@task.Tasks?.Count() ?? 0</span>
+                                             </button>
+                                             <ul class="dropdown-menu dropdown-menu-end p-2 small shadow-sm">
+                                                  @if (task.Tasks != null && task.Tasks.Any())
+                                                  {
+                                                       foreach (var sub in task.Tasks)
+                                                       {
+                                                            <li class="dropdown-item">
+                                                                 <div class="d-flex flex-column">
+                                                                      <strong>@sub.Title</strong>
+                                                                      <small class="text-muted">Due: @(sub.DueDate?.ToString("MM/dd/yyyy") ?? "--")</small>
+                                                                 </div>
+                                                            </li>
+                                                       }
+                                                  }
+                                                  else
+                                                  {
+                                                       <li class="dropdown-item text-muted">No subtasks</li>
+                                                  }
+                                             </ul>
+                                        </div>
+                                   </div>
+                              </div>
+                            }
+                        }
+                    </div>
+                }
+            }
+            
+            <div class="col-md-3 board-column d-flex align-items-center justify-content-center" id="basic-button" onclick="showSectionModal()">
+                <button class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center"
+                        style="width: 60px; height: 60px; max-width: 60px; max-height: 60px; font-size: 2rem; border-width: 2px;">
+                    +
+                </button>
+            </div>
+        </div>
+    </div>
 }
-
-<div class="modal fade" id="newSectionModal" tabindex="-1" aria-labelledby="newSectionModalLabel" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content bg-dark text-white">
-               <div class="modal-header border-0">
-                    <h5 class="modal-title text-white" id="newSectionModal">New section</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body">
-                    <form id="create-section-form">
-                         <label for="SectionName">Section Name:</label>
-                         <input type="text" id="SectionName" name="SectionName" value="" required />
-                         <input type="submit" value="Submit" class="submit" />
-                         <div id="project-data" data-project-id="@Model.Id"></div>
-                    </form>
-               </div>
-          </div>
-     </div>
-</div>
-
-
-<script>
-
-
-     const project_app_url = "https://localhost:7006"
-
-
-     document.addEventListener('DOMContentLoaded', fetchSectionsAndTasks);
-     //what does a event listener do
-     //It waits for the DOM to be fully loaded before executing the specified function.
-     //In this case, it waits for the DOMContentLoaded event to fire, indicating that the initial HTML document has been completely loaded and parsed.
-     document.addEventListener('DOMContentLoaded', () => {
-          //what does querySelector do
-          //It selects the first element that matches the specified CSS selector.
-          const plusBtn = document.querySelector('#basic-button');
-          const container = document.querySelector('.row.flex-nowrap.overflow-auto');
-
-          // Add new column when clicking the main plus button
-          //by creating a new div element set its class name and set its inner HTML
-          //that will create a new column with a header and two icons (plus and three dots)
-          //
-          plusBtn.addEventListener('click', () => {
-               const newColumn = document.createElement('div');
-               newColumn.className = 'col-md-3 board-column';
-               newColumn.innerHTML = `
-                <h5 class="mb-3 text-white d-flex justify-content-between align-items-center">
-                    <span>To Do</span>
-                    <span class="d-flex gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                         class="bi bi-plus add-column-plus" viewBox="0 0 16 16">
-                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg>
-
-                     <div class="btn-group">
-                      <button type="button" class="btn p-0 m-0 bg-transparent border-0 dropdown-toggle"
-                              data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                             class="bi bi-three-dots three-dots" viewBox="0 0 16 16">
-                          <path d="M3 9.5a1.5 1.5 0 1 1 0-3
-                                   1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
-                                   1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
-                                   1.5 1.5 0 0 1 0 3"/>
-                        </svg>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Delete Section</a></li>
-                      </ul>
-                    </div>
-                    </span>
-               </h5>
-              `;
-
-               container.insertBefore(newColumn, plusBtn);
-          });
-
-          // Listen for clicks on dynamically added ".add-column-plus" buttons (event delegation)
-          document.addEventListener('click', (event) => {
-               if (event.target.classList.contains('add-column-plus')) {
-                    const column = event.target.closest('.col-md-3.board-column');
-                    const newTask = document.createElement('div');
-                    newTask.className = 'card task-card p-3';
-                    newTask.innerHTML = `
-                         <h6>New Task</h6>
-                         <span class="text-xs">Due: --</span>
-                    `;
-
-                    column.appendChild(newTask);
-               }
-          });
-     });
-
-     //what does a project modal do?
-     //It allows users to create a new project by filling out a form.
-     //so the current state of the modal 'newProjectModal' is hidden
-     //we need to show it when the user clicks the "New Project" button
-     function showProjectModal() {
-          const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
-          modal.show();
-     }
-
-
-     //what does bootstrap.Modal do?
-     //It provides a way to create modal dialogs in Bootstrap.
-     //but what is a modal
-     //A modal is a dialog box/popup window that is displayed on top of the current page.
-     function showSectionModal() {
-          const modal = new bootstrap.Modal(document.getElementById('newSectionModal'));
-          modal.show();
-     }
-
-     function renderSections(sections) {
-          const container = document.querySelector('.row.flex-nowrap.overflow-auto');
-
-          container.querySelectorAll('.board-column:not(#basic-button)').forEach(column => column.remove());
-
-
-          sections.forEach(section => {
-               const sectionElement = document.createElement('div');
-               sectionElement.className = 'col-md-3 board-column';
-
-               sectionElement.dataset.sectionId = section.id;
-
-               sectionElement.innerHTML = `
-                    <h5 class="mb-3 text-white d-flex justify-content-between align-items-center">
-                      <span>${section.name}</span>
-                       <span class="d-flex gap-3">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                              class="bi bi-plus add-column-plus" viewBox="0 0 16 16">
-                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                         </svg>
-
-                          <div class="btn-group">
-                           <button type="button" class="btn p-0 m-0 bg-transparent border-0 dropdown-toggle"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                  class="bi bi-three-dots three-dots" viewBox="0 0 16 16">
-                               <path d="M3 9.5a1.5 1.5 0 1 1 0-3
-                                        1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
-                                        1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3
-                                        1.5 1.5 0 0 1 0 3"/>
-                             </svg>
-                           </button>
-                           <ul class="dropdown-menu dropdown-menu-end">
-                             <li><a class="dropdown-item delete-section-btn" >Delete Section</a></li>
-                           </ul>
-                    </div>
-                    </span>
-                    </h5>
-                    `;
-
-               // Append tasks inside this column
-               section.tasks?.forEach(task => {
-                    const taskCard = document.createElement('div');
-                    taskCard.className = 'card task-card p-3 mb-2';
-                    taskCard.innerHTML = `
-                          <h6>${task.name}</h6>
-                          <span class="text-xs">Due: ${task.dueDate || '--'}</span>
-                      `;
-                    sectionElement.appendChild(taskCard);
-               });
-
-               const plusBtn = document.getElementById('basic-button');
-               container.insertBefore(sectionElement, plusBtn);
-          });
-     }
-
-
-     async function fetchSectionsAndTasks() {
-          const projectId = document.getElementById('project-data').dataset.projectId;
-          const response = await fetch(`${project_app_url}/api/Workflow/GetAllSectionsFromProjectId?Id=${projectId}`);
-          if (response.ok) {
-               const sections = await response.json();
-               renderSections(sections);
-          } else {
-               console.error("Failed to fetch sections & tasks");
-          }
-          console.log(response);
-     }
-
-     @* async function CreateSection() {
-
-     } *@
-
-     async function DeleteSectionAsync(sectionId) {
-          const confirmed = confirm("Are you sure you want to delete this section?");
-          if (!confirmed) return;
-
-          const response = await fetch(`${project_app_url}/api/Workflow/DeleteSection?Id=${sectionId}`, {
-               method: 'DELETE'
-          });
-
-          if (response.ok) {
-               await fetchSectionsAndTasks(); 
-          } else {
-               alert('Failed to delete section.');
-          }
-     }
-
-     document.addEventListener('click', function (event) {
-          const deleteBtn = event.target.closest('.delete-section-btn');
-          if (deleteBtn) {
-               const column = deleteBtn.closest('.board-column');
-               const sectionId = column?.dataset.sectionId;
-               if (sectionId) {
-                    DeleteSectionAsync(sectionId);
-               }
-          }
-     });
-
-     //so this function triggers every time user interacts with the section form
-     document.addEventListener('DOMContentLoaded', () => {
-         const form = document.getElementById('create-section-form');
-         form.addEventListener('submit', async function (e) {
-               // Prevent the default form submission behavior This prevents the page from reloading when the form is submitted.
-               e.preventDefault();
-
-             const sectionName = document.getElementById('SectionName').value.trim();
-             const projectId = document.getElementById('project-data').dataset.projectId;
-
-             if (!sectionName) return;
-
-                // Create the section object to send to the API
-             const section = {
-                 name: sectionName,
-                 projectId: projectId,
-             };
-
-             try {
-                 const response = await fetch('https://localhost:7006/api/Workflow/CreateSection', {
-                     method: 'POST',
-                     headers: {
-                         'Content-Type': 'application/json'
-                     },
-                     body: JSON.stringify(section)
-                 });
-
-                 if (response.ok) {
-                     await fetchSectionsAndTasks(); 
-                     form.reset();
-                     bootstrap.Modal.getInstance(document.getElementById('newSectionModal')).hide();
-                 } else {
-                     alert("Failed to create section. Please try again.");
-                 }
-             } catch (error) {
-                 console.error("Error creating section:", error);
-                 alert("An unexpected error occurred.");
-             }
-         });
-     });
-
-     // Initialize Feather Icons
-     //but why replace 
-     //because it replaces the <i> tags with SVG icons
-     feather.replace();
-
-
-</script>
-

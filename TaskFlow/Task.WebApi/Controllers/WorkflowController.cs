@@ -48,7 +48,7 @@ namespace TaskFlow.WebApi.Controllers
         }
 
         [HttpGet("GetProjectById")]
-        public async Task<IActionResult> GetAllProject(ushort Id,CancellationToken token)
+        public async Task<IActionResult> GetProjectById(ushort Id,CancellationToken token)
         {
             try
             {
@@ -194,7 +194,7 @@ namespace TaskFlow.WebApi.Controllers
         }
 
         [HttpPost("CreateSubTask")]
-        public async Task<IActionResult> CreateSybTask([FromBody] CreateSubTaskCommand request, CancellationToken token)
+        public async Task<IActionResult> CreateSubTask([FromBody] CreateSubTaskCommand request, CancellationToken token)
         {
             if (!ModelState.IsValid)
             {

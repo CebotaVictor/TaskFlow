@@ -18,11 +18,11 @@ namespace TaskFlow.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProjectBoardView(ushort Id, CancellationToken token) 
+        public async Task<IActionResult> ProjectBoardView(ushort Id, CancellationToken token)
         {
 
-            var result = await _projectApiService.GetProjectById(Id, token);
-            if(result == null)
+            var result = await _projectApiService.GetProjectByIdAsync(Id, token);
+            if (result == null)
             {
                 return View("Error", new ErrorViewModel { RequestId = $"Project with id {Id} not found" });
             }
@@ -45,7 +45,7 @@ namespace TaskFlow.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewPage(CancellationToken token) 
+        public async Task<IActionResult> ViewPage(CancellationToken token)
         {
             try
             {

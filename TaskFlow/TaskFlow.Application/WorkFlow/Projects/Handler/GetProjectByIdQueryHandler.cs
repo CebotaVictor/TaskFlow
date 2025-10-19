@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ namespace TaskFlow.Application.WorkFlow.Projects.Handler
         private IWorkflowUnitOfWork _unitOfWork;
         private IProjectRepository _projectRepository;
         private readonly ILogger<GetProjectByIdQueryHandler> _logger;
-
         public GetProjectByIdQueryHandler(IWorkflowUnitOfWork unitOfWork, ILogger<GetProjectByIdQueryHandler> logger, IProjectRepository projectRepository)
         {
             _unitOfWork = unitOfWork ?? throw new NullReferenceException("IGenericRepository is null in CreateProjectCommandHandler");

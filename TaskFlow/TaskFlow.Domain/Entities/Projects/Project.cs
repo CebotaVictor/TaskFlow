@@ -28,7 +28,7 @@ namespace TaskFlow.Domain.Entities.Projects
         public ushort? UserId { get; set; }
         public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public DateTime? EndDate { get; set; }
-        public ICollection<Section> Sections { get; } =     new List<Section>();
+        public ICollection<Section> Sections { get; set; } = new List<Section>();
     }
 }
     

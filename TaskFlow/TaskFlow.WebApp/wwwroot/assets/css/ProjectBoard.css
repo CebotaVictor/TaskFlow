@@ -1,0 +1,113 @@
+body {
+          background-color: #1e1e2f;
+          color: black;
+     }
+     /* Make the board-column relative for absolute positioning of the plus sign */
+     .board-column {
+          position: relative;
+     }
+
+     /* Style and position the plus sign */
+     .board-column .add-column-plus {
+               
+          font-size: 1.5rem; 
+          color: #f8f9fa; 
+          opacity: 0; 
+          transition: opacity 0.3s ease-in-out;
+          cursor: pointer;
+          padding: 5px;
+          background-color: #2b2b3c
+     }
+
+     .board-column:hover .add-column-plus,
+     .board-column:hover .three-dots {
+          opacity: 1;
+     }
+
+     .board-column .three-dots {
+          font-size: 1.5rem; /* Make it visible */
+          color: #f8f9fa; /* Light color for visibility on dark background */
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out; /* Smooth transition */
+          cursor: pointer;
+          padding: 5px;
+          background-color: #2b2b3c
+     }
+
+     .btn.dropdown-toggle::after {
+          display: none;
+     }
+
+     .plus-column {
+          position: relative;
+          bottom: 20%;
+          background-color: #2b2b3c;
+          border-radius: 10px;
+          padding: 15px;
+          margin: 10px;
+          min-height: 10px;
+          max-height: 20px;
+     }
+
+     .board-column {
+          background-color: #2b2b3c;
+          border-radius: 10px;
+          padding: 15px;
+          margin: 10px;
+          min-height: 410px;
+          max-height: 500px;
+          overflow-y: auto;
+     }
+
+     .task-card {
+          background-color: #3c3c4e;
+          border: none;
+          border-radius: 8px;
+          margin-bottom: 10px;
+          color: white;
+     }
+
+          .task-card h6 {
+               font-size: 16px;    
+          }
+
+     .add-task {
+          background: none;
+          color: #bbb;
+          border: 1px dashed #777;
+          border-radius: 8px;
+          padding: 6px;
+          cursor: pointer;
+     }
+
+     #basic-button{
+          opacity: 0.4;
+     }
+
+     /* .bg-hex-30{
+          background: color #A3A3FF;
+     } */
+
+
+     .projectNavbar{
+          background-color: #2b2b3c;
+          position: relative; 
+           bottom:20px;
+     }
+
+     .ProjectContainer {
+          position: relative;
+          bottom:45px;
+     }
+
+     .task-card .text-xs {
+          font-size: 0.8rem;
+     }
+
+     .task-card .dropdown-menu {
+          min-width: 200px;
+     }
+
+
+
+ 

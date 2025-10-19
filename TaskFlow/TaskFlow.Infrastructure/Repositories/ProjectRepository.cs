@@ -10,6 +10,7 @@ using TaskFlow.Domain.Entities.WSections;
 using TaskFlow.Domain.Entities.Projects;
 using TaskFlow.Domain.Entities.Users;
 using TaskFlow.Infrastructure.BL;
+using System.Diagnostics;
 
 namespace TaskFlow.Infrastructure.Repositories
 {
@@ -19,6 +20,7 @@ namespace TaskFlow.Infrastructure.Repositories
         private readonly DbSet<Project>? _context;
         private readonly ILogger<ProjectRepository> _logger;
 
+        [DebuggerStepThrough]
         public ProjectRepository(WorkflowGenericRepository<Project>? repository, WorkflowDBContext? context, ILogger<ProjectRepository> logger)
         {
             _repository = repository;
@@ -32,11 +34,11 @@ namespace TaskFlow.Infrastructure.Repositories
         }
 
         public async Task<IEnumerable<Project>> GetAllProjectsAsync()
-        {
+            {
             try
             {
                 if (_context!= null)
-                    return await _context.Include("Sections").ToListAsync() ?? throw new NullReferenceException($"GetAllEntities query returned null for the GetAllEntities");
+                    return await _context.Include(p => p.Sections).ThenInclude(p => p.Tasks).ToListAsync() ?? throw new NullReferenceException($"GetAllEntities query returned null for the GetAllEntities");
                 throw new NullReferenceException("GetAllEntities got a null _dbSet for the GetAllEntities");
             }
             catch (Exception ex)
@@ -51,7 +53,7 @@ namespace TaskFlow.Infrastructure.Repositories
             try
             {
                 if (_context != null)
-                    return await _context.Include(p => p.Sections).ThenInclude(p=>p.Tasks).FirstOrDefaultAsync(p=>p.Id == Id) ?? throw new NullReferenceException($"GetEntityById query returned null for the GetAllEntitiesById");
+                    return await _context.AsQueryable().Include(p => p.Sections).ThenInclude(p=>p.Tasks).FirstOrDefaultAsync(p=>p.Id == Id) ?? throw new NullReferenceException($"GetEntityById query returned null for the GetAllEntitiesById");
                 throw new NullReferenceException("GetEntityById got a null _dbSet for the GetAllEntitiesById");
             }
             catch (Exception ex)
